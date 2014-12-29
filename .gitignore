@@ -24,3 +24,5 @@ coverage/
 
 # every fucking time, dolphin
 .directory
+
+node/node_modules

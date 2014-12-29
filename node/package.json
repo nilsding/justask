@@ -1,0 +1,20 @@
+{
+  "name": "knotifier",
+  "version": "0.0.0",
+  "description": "SocketIO/Redis subscriber",
+  "main": "knotifier.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.rrerr.net:justask/knotifier.git"
+  },
+  "author": "nilsding",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "redis": "^0.12.1",
+    "socket.io": "^1.2.1"
+  }
+}
