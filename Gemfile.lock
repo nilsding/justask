@@ -271,6 +271,8 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    socket.io-rails (1.2.1)
+      railties (>= 3.1)
     spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -370,6 +372,7 @@ DEPENDENCIES
   sidekiq
   simplecov
   sinatra
+  socket.io-rails
   spring
   thin
   turbolinks
