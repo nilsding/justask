@@ -4,6 +4,8 @@ site_name: "justask"
 hostname: "justask.rrerr.net"
 https: true
 
+socketio_path: 'justask.rrerr.net/knotifier/'
+
 # Name of the "Anonymous" user. (e.g. "Anonymous Coward", "Arno Nym", "Mr. X", ...)
 anonymous_name: "Anonymous"
 
