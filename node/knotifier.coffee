@@ -3,12 +3,16 @@ http     = require 'http'
 redis    = require 'redis'
 
 KNOTIFIER_DEFAULT_PORT = 34569
+KNOTIFIER_DEFAULT_HOST = '127.0.0.1'
 
 server = require('http').createServer()
 io = require('socket.io').listen(server)
 
-server.listen process.env.KNOTIFIER_PORT || KNOTIFIER_DEFAULT_PORT, ->
-  console.log "Listening on #{process.env.KNOTIFIER_PORT || KNOTIFIER_DEFAULT_PORT}"
+port = process.env.KNOTIFIER_PORT || KNOTIFIER_DEFAULT_PORT
+hostname = process.env.KNOTIFIER_HOST || KNOTIFIER_DEFAULT_HOST
+
+server.listen port, hostname, ->
+  console.log "Listening on #{hostname}:#{port}"
 
 io.sockets.on 'connection', (socket) ->
   console.log 'an user connected'
