@@ -64,6 +64,11 @@ Try connecting to the database:
 
     $ bundle exec rake assets:precompile RAILS_ENV=production
 
+#### Install Knotifier dependencies
+
+    $ cd node/
+    $ npm i
+
 #### Run the server
 
     # Production mode:
