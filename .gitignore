@@ -28,4 +28,3 @@ coverage/
 
 node/node_modules
 node/knotifier.js
-node/npm-debug.log
