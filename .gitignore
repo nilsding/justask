@@ -27,4 +27,3 @@ coverage/
 .directory
 
 node/node_modules
-node/knotifier.js

@@ -2,7 +2,7 @@
   "name": "knotifier",
   "version": "0.0.0",
   "description": "SocketIO/Redis subscriber",
-  "main": "knotifier.js",
+  "main": "knotifier.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,10 +12,6 @@
   },
   "author": "nilsding",
   "license": "MIT",
-  "scripts": {
-    "start": "node knotifier",
-    "prestart": "coffee -c knotifier.coffee"
-  },
   "dependencies": {
     "coffee-script": "^1.8.0",
     "redis": "^0.12.1",
