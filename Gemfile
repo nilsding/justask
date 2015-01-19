@@ -46,6 +46,8 @@ gem 'questiongenerator', git: 'https://github.com/justask/questiongenerator.git'
 gem 'sanitize'
 gem 'redcarpet'
 
+gem 'doorkeeper'
+
 # OmniAuth and providers
 gem 'omniauth'
 gem 'omniauth-twitter'

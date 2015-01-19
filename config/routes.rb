@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  use_doorkeeper
   # Admin panel
   mount RailsAdmin::Engine => '/justask_admin', as: 'rails_admin'
 
