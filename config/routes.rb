@@ -1,7 +1,10 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
-  use_doorkeeper
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+  end
+
   # Admin panel
   mount RailsAdmin::Engine => '/justask_admin', as: 'rails_admin'
 
