@@ -1,0 +1,29 @@
+.container.j2-page
+  = render 'user/settings_tabs'
+  .col-md-9.col-xs-12.col-sm-9
+    = render 'layouts/messages'
+    .panel.panel-default
+      .panel-body
+        %h3 Applications
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t('doorkeeper.authorized_applications.index.application')
+              %th= t('doorkeeper.authorized_applications.index.created_at')
+              %th
+              %th
+          %tbody
+            - @applications.each do |application|
+              %tr
+                %td= application.name
+                %td= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format'))
+                %td= render 'oauth_apps_delete_form', application: application
+
+        %p
+          Do you want to make a wicked app for
+          = succeed '?' do
+            = APP_CONFIG['site_name']
+          Start with registering a new application by
+          = succeed '!' do
+            %a{href: new_oauth_application_path}<
+              clicking this link

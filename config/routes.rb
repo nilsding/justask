@@ -2,6 +2,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
 
   use_doorkeeper do
+    skip_controllers :authorized_applications
     controllers :applications => 'oauth/applications'
   end
 
@@ -64,6 +65,8 @@ Rails.application.routes.draw do
 
   match '/settings/privacy', to: 'user#edit_privacy', via: :get, as: :edit_user_privacy
   match '/settings/privacy', to: 'user#update_privacy', via: :patch, as: :update_user_privacy
+  match '/settings/applications', to: 'user#oauth_apps_index', via: :get, as: :oauth_authorized_applications
+  match '/settings/applications', to: 'user#oauth_apps_destroy', via: :delete, as: :oauth_authorized_application
 
   namespace :ajax do
     match '/ask', to: 'question#create', via: :post, as: :ask

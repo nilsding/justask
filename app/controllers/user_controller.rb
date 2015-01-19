@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_filter :authenticate_user!, only: %w(edit update edit_privacy update_privacy)
+  before_filter :authenticate_user!, only: %w(edit update edit_privacy update_privacy oauth_apps_index oauth_apps_destroy)
 
   def show
     @user = User.where('LOWER(screen_name) = ?', params[:username].downcase).first!
@@ -43,6 +43,17 @@ class UserController < ApplicationController
       flash[:error] = 'An error occurred. ;_;'
     end
     redirect_to edit_user_privacy_path
+  end
+  # endregion
+
+  # region Authorized OAuth apps
+  def oauth_apps_index
+    @applications = Doorkeeper::Application.authorized_for(current_user)
+  end
+
+  def oauth_apps_destroy
+    Doorkeeper::AccessToken.revoke_all_for params[:id], current_user
+    redirect_to oauth_authorized_applications_url, notice: I18n.t(:notice, scope: [:doorkeeper, :flash, :authorized_applications, :destroy])
   end
   # endregion
 
