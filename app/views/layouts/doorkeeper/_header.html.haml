@@ -1,0 +1,27 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
+  .container{class: ios_web_app? ? "ios-web-app" : ''}
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#j2-main-navbar-collapse", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: oauth_applications_path}
+        = APP_CONFIG['site_name']
+        Developers
+    #j2-main-navbar-collapse.collapse.navbar-collapse
+      - if user_signed_in?
+        %ul.nav.navbar-nav
+          = nav_entry "Applications", oauth_applications_path
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle{href: "#", "data-toggle" => "dropdown"}
+              = current_user.screen_name
+              %b.caret
+            %ul.dropdown-menu
+              %li= link_to "Back to #{APP_CONFIG['site_name']}", root_path
+              %li= link_to "Logout",  destroy_user_session_path, method: :delete
+      - else
+        %ul.nav.navbar-nav.navbar-right
+          = nav_entry "Sign in", new_user_session_path
+          = nav_entry "Sign up", new_user_registration_path
