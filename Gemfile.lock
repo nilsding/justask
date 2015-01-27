@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/justask/questiongenerator.git
-  revision: d90f681be8e3a155a6aa45fc9afaae95c24d5114
+  revision: 4f85dafbaf226e3dfbfad9ed3f169bab03b9a84c
   specs:
     questiongenerator (0.1.0)
 
@@ -286,6 +286,11 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    simplecov-json (0.2)
+      json
+      simplecov
+    simplecov-rcov (0.2.3)
+      simplecov (>= 0.4.1)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -402,6 +407,8 @@ DEPENDENCIES
   sdoc (~> 0.4.1)
   sidekiq
   simplecov
+  simplecov-json
+  simplecov-rcov
   sinatra
   spring
   sweetalert-rails
