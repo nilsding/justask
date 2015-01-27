@@ -7,12 +7,14 @@
     %thead
       %tr
         %th= t('.name')
+        %th Description
         /%th= t('.callback_url')
         %th{colspan: 2}
     %tbody
       - @applications.each do |application|
         %tr{:id => "application_#{application.id}"}
           %td= link_to application.name, oauth_application_path(application)
+          %td= application.description
           /%td= application.redirect_uri
           %td= link_to t('doorkeeper.applications.buttons.edit'), edit_oauth_application_path(application), class: 'btn btn-link'
           %td= render 'delete_form', application: application

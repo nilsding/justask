@@ -9,13 +9,16 @@
           %thead
             %tr
               %th= t('doorkeeper.authorized_applications.index.application')
+              %th Description
+              %th Developer
               %th= t('doorkeeper.authorized_applications.index.created_at')
-              %th
               %th
           %tbody
             - @applications.each do |application|
               %tr
                 %td= application.name
+                %td= application.description
+                %td= user_screen_name application.owner
                 %td= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format'))
                 %td= render 'oauth_apps_delete_form', application: application
 

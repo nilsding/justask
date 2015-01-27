@@ -1,21 +1,16 @@
 .container
   %h1.page-header= t('.title', name: @application.name)
+  %p= @application.description
   = render 'layouts/messages'
   .row
     .col-md-8
-      %h4
-        = t('.application_id')
-        \:
+      %h4 Consumer Key:
       %p
         %code#application_id= @application.uid
-      %h4
-        = t('.secret')
-        \:
+      %h4 Consumer Secret:
       %p
         %code#secret= @application.secret
-      %h4
-        = t('.callback_urls')
-        \:
+      %h4 Callback URLs:
       %table
         - @application.redirect_uri.split.each do |uri|
           %tr

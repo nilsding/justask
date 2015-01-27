@@ -2,13 +2,15 @@
   - if application.errors.any?
     .alert.alert-danger{"data-alert" => ""}
       %p= t('doorkeeper.applications.form.error')
-  = f.text_field :name, class: 'form-control'
+  = f.text_field :name
 
-  = f.text_area :redirect_uri, class: 'form-control'
+  = f.text_field :description, help: '255 characters max.'
+
+  = f.text_area :redirect_uri
   %span.help-block
     = t('doorkeeper.applications.help.redirect_uri')
   - if Doorkeeper.configuration.native_redirect_uri
     %span.help-block
       = raw t('doorkeeper.applications.help.native_redirect_uri', native_redirect_uri: "<code>#{ Doorkeeper.configuration.native_redirect_uri }</code>")
-  = f.submit t('doorkeeper.applications.buttons.submit'), class: "btn btn-primary"
-  = link_to t('doorkeeper.applications.buttons.cancel'), oauth_applications_path, :class => "btn btn-default"
+  = f.primary t('doorkeeper.applications.buttons.submit')
+  = link_to t('doorkeeper.applications.buttons.cancel'), oauth_applications_path, class: 'btn btn-default'

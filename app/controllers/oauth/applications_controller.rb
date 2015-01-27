@@ -23,4 +23,7 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
     raise ActiveRecord::RecordNotFound unless @application.owner == current_user
   end
 
+  def application_params
+    params.require(:doorkeeper_application).permit(:name, :description, :redirect_uri)
+  end
 end
