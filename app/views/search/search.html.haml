@@ -1,0 +1,9 @@
+= bootstrap_form_for search_path, method: :get do |f|
+  = text_field_tag :q, params[:q], label: "Search for"
+  = submit_tag "Go", name: nil
+
+%ul
+  - @results.each do |result|
+    %li
+      %h3= link_to result.try(:highlight).try(:content) ? result.highlight.content[0].html_safe : result.content, controller: "answer", action: "show", username: 'asdf', id: result._id
+

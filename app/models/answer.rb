@@ -1,4 +1,9 @@
+require 'elasticsearch/model'
+
 class Answer < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :user
   belongs_to :question
   has_many :comments, dependent: :destroy
@@ -32,7 +37,35 @@ class Answer < ActiveRecord::Base
     Notification.denotify self.question.user, self
   end
 
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: 'false' do
+      indexes :content, analyzer: 'english'
+    end
+  end
+
+  def self.search(query)
+    __elasticsearch__.search(
+      {
+        query: {
+          multi_match: {
+            query: query,
+            fields: ['content^10', 'text']
+          }
+        },
+        highlight: {
+          pre_tags: ['<strong>'],
+          post_tags: ['</strong>'],
+          fields: {
+            title: {},
+            text: {}
+          }
+        }
+      }
+    )
+  end
+
   def notification_type(*_args)
     Notifications::QuestionAnswered
   end
 end
+Answer.import
