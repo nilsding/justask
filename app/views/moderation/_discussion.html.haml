@@ -1,0 +1,25 @@
+- if report.moderation_comments.all.count == 0
+  There are no comments yet.
+- else
+  %ul.comments
+    - report.moderation_comments.all.each do |comment|
+      %li{data: { comment_id: comment.id }}
+        .media.comments--media
+          .pull-left
+            %img.img-rounded.answerbox--img{src: gravatar_url(comment.user)}
+          .media-body.comments--body
+            %h6.media-heading.answerbox--question-user= user_screen_name comment.user
+            - if comment.user == current_user
+              .pull-right
+                .btn-group
+                  %button.btn.btn-link.btn-sm.dropdown-toggle{data: { toggle: :dropdown }, aria: { expanded: :false }}
+                    %span.caret
+                  %ul.dropdown-menu.dropdown-menu-right{role: :menu}
+                    %li.text-danger
+                      %a{href: '#', data: { action: 'mod-comment-destroy', id: comment.id }}
+                        %i.fa.fa-trash-o
+                        Delete
+            %p.comments--content= comment.content
+.form-group.has-feedback{name: 'mod-comment-new-group', data: { id: report.id }}
+  %input.form-control.comments--box{type: :text, placeholder: 'Comment...', name: 'mod-comment-new', data: { id: report.id }}
+  %span.text-muted.form-control-feedback.comments--count{id: "mod-comment-charcount-#{report.id}"} 160

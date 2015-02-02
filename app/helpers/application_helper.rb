@@ -3,7 +3,8 @@ module ApplicationHelper
     options = {
       badge: nil,
       badge_color: nil,
-      icon: nil
+      icon: nil,
+      class: ''
     }.merge(options)
 
     unless options[:icon].nil?
@@ -17,7 +18,7 @@ module ApplicationHelper
         }"))}"
     end
 
-    content_tag(:li, link_to(body.html_safe, path), class: ('active' if current_page? path))
+    content_tag(:li, link_to(body.html_safe, path), class: ("#{'active ' if current_page? path}#{options[:class]}"))
   end
   
   ##
@@ -46,12 +47,32 @@ module ApplicationHelper
     count.count
   end
 
-  def privileged?(user)
-    (current_user && (current_user == user || current_user.admin?)) ? true : false
+  def notification_count
+    return 0 unless user_signed_in?
+    count = Notification.for(current_user).where(new: true)
+    return nil if count.nil?
+    return nil unless count.count > 0
+    count.count
   end
 
+  def privileged?(user)
+    ((!current_user.nil?) && ((current_user == user) || current_user.mod?)) ? true : false
+  end
+
+  # @deprecated Use {User#profile_picture.url} instead.
   def gravatar_url(user)
-    return '//www.gravatar.com/avatar' if user.nil?
-    "//www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}"
+    return user.profile_picture.url :medium
+    # return '/cage.png'
+    #return '//www.gravatar.com/avatar' if user.nil?
+    #return "//www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user)}" if user.is_a? String
+    #"//www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}"
+  end
+
+  def ios_web_app?
+    user_agent = request.env['HTTP_USER_AGENT'] || 'Mozilla/5.0'
+    # normal MobileSafari.app UA: Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B435 Safari/600.1.4
+    # webapp UA: Mozilla/5.0 (iPhone; CPU iPhone OS 8_1_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12B435
+    return true if user_agent.match /^Mozilla\/\d+\.\d+ \(i(?:Phone|Pad|Pod); CPU(?:.*) like Mac OS X\)(?:.*) Mobile(?:\S*)$/
+    false
   end
 end

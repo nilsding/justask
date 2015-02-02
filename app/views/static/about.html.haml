@@ -1,25 +1,63 @@
+.jumbotron.j2-jumbo.text-center
+  %h1= APP_CONFIG['site_name']
+  %p About our service, features and other information
 .container
-  %h1.centre
-    About
-    = APP_CONFIG['site_name']
-  
   = render 'layouts/messages'
-  
-  /
-    TODO: fill this out.
-    also TODO: find a way to make each panel's height equal
-  
+
   .row
     .col-sm-4
       .panel.panel-default
         .panel-body
           %h3 The Team
-          The people behind justask!
+          The people behind
+          = succeed '!' do
+            = APP_CONFIG['site_name']
           %br/
-          %ul
-            - @admins.each do |user|
+          .media
+            .pull-left
+              %a{href: show_user_profile_path('nilsding')}
+                %img.img-rounded.answerbox--img{src: User.find_by_screen_name('nilsding').profile_picture.url(:medium)}
+            .media-body
+              %h4.entry-text.entry-about nilsding
+              %h6.entry-subtext Backend, Server & Code
+          .media
+            .pull-left
+              %a{href: show_user_profile_path('pixeldesu')}
+                %img.img-rounded.answerbox--img{src: User.find_by_screen_name('pixeldesu').profile_picture.url(:medium)}
+            .media-body
+              %h4.entry-text.entry-about pixeldesu
+              %h6.entry-subtext Frontend Design & Layout
+          .media
+            .pull-left
+              %a{href: show_user_profile_path('Filippus')}
+                %img.img-rounded.answerbox--img{src: User.find_by_screen_name('Filippus').profile_picture.url(:medium)}
+            .media-body
+              %h4.entry-text.entry-about Filippus
+              %h6.entry-subtext Moderator Management & Support
+      .panel.panel-default
+        .panel-body
+          %h3 Moderators
+          The people on
+          = APP_CONFIG['site_name']
+          that look after you!
+          %ul.about--moderator
+            - User.where(moderator: true).each do |mod|
               %li
-                %a= link_to user.screen_name, show_user_profile_path(user.screen_name)
+                %a{href: show_user_profile_path(mod.screen_name)}
+                  %img.answerbox--img-small{src: User.find_by_screen_name(mod.screen_name).profile_picture.url(:medium)}
+                = mod.screen_name
+    .col-sm-4
+      .panel.panel-default
+        .panel-body
+          %h3 Alpha version
+          %p This is an alpha version, full of bugs.  Caveat emptor.
+          %p
+            Found a bug?  Have an idea for a must-have feature?  Please
+            = link_to "report them!", 'https://github.com/retrospring/bugs/issues'
+
+          %p
+            Still have some questions? Check our
+            = link_to "FAQ!", help_faq_path
       .panel.panel-default
         .panel-body
           There are lies, damned lies, and then there are...
@@ -33,22 +71,37 @@
               %h6.entry-subtext Answers
           .row
             .col-xs-6
+              %h4.entry-text#asked-count= Comment.count
+              %h6.entry-subtext Comments
+            .col-md-6.col-sm-6.col-xs-6
+              %h4.entry-text#answered-count= Smile.count
+              %h6.entry-subtext Smiles
+          .row
+            .col-xs-6
               %h4.entry-text#follower-count= User.count
               %h6.entry-subtext Users
     .col-sm-4
       .panel.panel-default
         .panel-body
-          %h3 Alpha version
-          This is an alpha version, full of bugs.  Caveat emptor.
-    .col-sm-4
+          %h3 Donate
+          We are not backed by any company, but we need some money to keep
+          our server infrastructure running.
+
+          %form{:action => "https://www.paypal.com/cgi-bin/webscr", :method => "post", :target => "_top"}
+            %input{:name => "cmd", :type => "hidden", :value => "_s-xclick"}/
+            %input{:name => "hosted_button_id", :type => "hidden", :value => "6ZT5MS6UGU6HC"}/
+            %input{:alt => "PayPal - The safer, easier way to pay online!", :border => "0", :name => "submit", :src => "https://www.paypalobjects.com/en_US/AT/i/btn/btn_donateCC_LG.gif", :type => "image"}/
+            %img{:alt => "", :border => "0", :height => "1", :src => "https://www.paypalobjects.com/de_DE/i/scr/pixel.gif", :width => "1"}/
+
+          Want to support us over a longer timespan? We also have a Patreon campaign!
+          %a.btn.btn-primary.btn-block{href: "https://patreon.com/retrospring"} Patreon
       .panel.panel-default
         .panel-body
-          %h3 Made with...
-          %ul
-            %li HTML5
-            %li Ruby on Rails
-            %li FreeBSD, Linux
-            %li RubyMine, Kate, vim
-            %li GitLab
+          %h3 Patrons
+          People that believe in our vision, and that's why we love them <3
+          %ul.about--moderator
+            - User.where(supporter: true).each do |sup|
+              %a{href: show_user_profile_path(sup.screen_name), title: sup.screen_name, data: { toggle: :tooltip, placement: :top }}
+                %img.img-rounded.answerbox--img-small{src: sup.profile_picture.url(:medium)}
 
 = render "shared/links"

@@ -1,7 +1,32 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+
+  # Admin panel
+  mount RailsAdmin::Engine => '/justask_admin', as: 'rails_admin'
+
+  # Sidekiq
+  constraints ->(req) { req.env["warden"].authenticate?(scope: :user) &&
+                        req.env['warden'].user.admin? } do
+    mount Sidekiq::Web, at: "/sidekiq"
+  end
+
+  # Moderation panel
+  constraints ->(req) { req.env['warden'].authenticate?(scope: :user) &&
+                       (req.env['warden'].user.admin? or req.env['warden'].user.moderator?) } do
+    match '/moderation(/:type)', to: 'moderation#index', via: :get, as: :moderation, defaults: {type: 'all'}
+    namespace :ajax do
+      match '/mod/destroy_report', to: 'moderation#destroy_report', via: :post, as: :mod_destroy_report
+      match '/mod/create_comment', to: 'moderation#create_comment', via: :post, as: :mod_create_comment
+      match '/mod/destroy_comment', to: 'moderation#destroy_comment', via: :post, as: :mod_destroy_comment
+      match '/mod/create_vote', to: 'moderation#vote', via: :post, as: :mod_create_vote
+      match '/mod/destroy_vote', to: 'moderation#destroy_vote', via: :post, as: :mod_destroy_vote
+    end
+  end
+
   root 'static#index'
 
   match '/about', to: 'static#about', via: 'get'
+  match '/help/faq', to: 'static#faq', via: 'get', as: :help_faq
 
   # Devise routes
   devise_for :users, path: 'user', skip: [:sessions, :registrations]
@@ -22,18 +47,57 @@ Rails.application.routes.draw do
 
   match '/settings/profile', to: 'user#edit', via: 'get', as: :edit_user_profile
   match '/settings/profile', to: 'user#update', via: 'patch', as: :update_user_profile
-  
+
+  # resources :services, only: [:index, :destroy]
+  match '/settings/services', to: 'services#index', via: 'get', as: :services
+  match '/settings/services/:id', to: 'services#destroy', via: 'delete', as: :service
+  controller :services do
+    scope "/auth", as: "auth" do
+      get ':provider/callback' => :create
+      get :failure
+    end
+  end
+
+  match '/settings/privacy', to: 'user#edit_privacy', via: :get, as: :edit_user_privacy
+  match '/settings/privacy', to: 'user#update_privacy', via: :patch, as: :update_user_privacy
+
   namespace :ajax do
     match '/ask', to: 'question#create', via: :post, as: :ask
-    match '/answer', to: 'inbox#destroy', via: :post, as: :answer
+    match '/generate_question', to: 'inbox#create', via: :post, as: :generate_question
+    match '/delete_inbox', to: 'inbox#remove', via: :post, as: :delete_inbox
+    match '/delete_all_inbox', to: 'inbox#remove_all', via: :post, as: :delete_all_inbox
+    match '/answer', to: 'answer#create', via: :post, as: :answer
     match '/destroy_answer', to: 'answer#destroy', via: :post, as: :destroy_answer
     match '/create_friend', to: 'friend#create', via: :post, as: :create_friend
     match '/destroy_friend', to: 'friend#destroy', via: :post, as: :destroy_friend
+    match '/create_smile', to: 'smile#create', via: :post, as: :create_smile
+    match '/destroy_smile', to: 'smile#destroy', via: :post, as: :destroy_smile
+    match '/create_comment', to: 'comment#create', via: :post, as: :create_comment
+    match '/destroy_comment', to: 'comment#destroy', via: :post, as: :destroy_comment
+    match '/report', to: 'report#create', via: :post, as: :report
+    match '/create_group', to: 'group#create', via: :post, as: :create_group
+    match '/destroy_group', to: 'group#destroy', via: :post, as: :destroy_group
+    match '/group_membership', to: 'group#membership', via: :post, as: :group_membership
   end
+
+  match '/public', to: 'public#index', via: :get, as: :public_timeline
+  match '/group/:group_name', to: 'group#index', via: :get, as: :group_timeline
+
+  match '/notifications(/:type)', to: 'notifications#index', via: :get, as: :notifications, defaults: {type: 'all'}
 
   match '/inbox', to: 'inbox#show', via: 'get'
   
   match '/user/:username(/p/:page)', to: 'user#show', via: 'get', defaults: {page: 1}
-  match '/@:username(/p/:page)', to: 'user#show', via: 'get', as: :show_user_profile, defaults: {page: 1}
-  match '/:username(/p/:page)', to: 'user#show', via: 'get', as: :show_user_profile_alt, defaults: {page: 1}
+  match '/@:username(/p/:page)', to: 'user#show', via: 'get', as: :show_user_profile_alt, defaults: {page: 1}
+  match '/@:username/a/:id', to: 'answer#show', via: 'get', as: :show_user_answer_alt
+  match '/@:username/q/:id', to: 'question#show', via: 'get', as: :show_user_question_alt
+  match '/@:username/followers(/p/:page)', to: 'user#followers', via: 'get', as: :show_user_followers_alt, defaults: {page: 1}
+  match '/@:username/friends(/p/:page)', to: 'user#friends', via: 'get', as: :show_user_friends_alt, defaults: {page: 1}
+  match '/:username(/p/:page)', to: 'user#show', via: 'get', as: :show_user_profile, defaults: {page: 1}
+  match '/:username/a/:id', to: 'answer#show', via: 'get', as: :show_user_answer
+  match '/:username/q/:id', to: 'question#show', via: 'get', as: :show_user_question
+  match '/:username/followers(/p/:page)', to: 'user#followers', via: 'get', as: :show_user_followers, defaults: {page: 1}
+  match '/:username/friends(/p/:page)', to: 'user#friends', via: 'get', as: :show_user_friends, defaults: {page: 1}
+  match '/:username/groups(/p/:page)', to: 'user#groups', via: 'get', as: :show_user_groups, defaults: {page: 1}
+  match '/:username/questions(/p/:page)', to: 'user#questions', via: 'get', as: :show_user_questions, defaults: {page: 1}
 end

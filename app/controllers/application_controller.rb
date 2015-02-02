@@ -4,11 +4,21 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  
-  def privileged?(user)
-    (current_user && (current_user == user || current_user.admin?)) ? true : false
+  before_filter :banned?
+
+  # check if user got hit by the banhammer of doom
+  def banned?
+    if current_user.present? && current_user.banned?
+      name = current_user.screen_name
+      # obligatory '2001: A Space Odyssey' reference
+      flash[:notice] = "I'm sorry, #{name}, I'm afraid I can't do that."
+      sign_out current_user
+      redirect_to new_user_session_path
+    end
   end
-  
+
+  include ApplicationHelper
+
   protected
 
   def configure_permitted_parameters

@@ -2,7 +2,18 @@
 
 body {
   overflow-y: scroll;
+  word-wrap: break-word;
+  background-color: #fafafa;
 }
+
+@import "scss/answerbox";
+@import "scss/comments";
+@import "scss/entry";
+@import "scss/navbar";
+@import "scss/panel";
+@import "scss/user";
+@import "scss/notifications";
+@import "scss/groups";
 
 .j2-page {
   padding-top: 30px;
@@ -12,69 +23,81 @@ body {
   text-align: center;
 }
 
-.entry-subtext {
-  color: $navbar-inverse-bg;
-  margin-top: 0px;
+.ios-web-app {
+  padding-top: 1em;
+}
+
+#load-more-btn {
+  margin-bottom: 1.5em;
+}
+
+.j2-jumbo {
+  background-color: darken($navbar-inverse-bg, 10%);
+  color: #fff;
+}
+
+.j2-jumbo h1, .j2-jumbo h2, .j2-jumbo h3, .j2-jumbo h4, .j2-jumbo h5, .j2-jumbo h6 {
+  color: #fff;
+}
+
+.j2-jumbo a, .j2-jumbo a:hover {
+  color: #fff;
+  opacity: 0.6;
+}
+
+.j2-jumbo a:hover {
+  opacity: 1;
+}
+
+.j2-jumbo a .btn {
+  opacity: 1;
+}
+
+.smiles {
+  margin-bottom: 7px;
+}
+
+.j2-lh {
+  color: #fff;
+}
+.about--moderator {
+  padding-left: 0px;
+}
+
+.about--moderator li {
+  list-style: none;
+}
+
+.j2-up {
   text-transform: uppercase;
-  font-weight: bold;
-  font-size: 80%;
 }
 
-.entry-text {
-  margin-bottom: 0px;
+.j2-label {
+  display: inline-block;
 }
 
-.img-answerbox {
-  min-height: 32px;
-  min-width: 32px;
-  height: 32px;
-  width: 32px;
+.j2-table {
+  display: table;
 }
 
-.img-answerbox-small {
-  min-height: 20px;
-  min-width: 20px;
-  height: 20px;
-  width: 20px;
+.input--center {
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.answerbox-question-text, .answerbox-question-user {
-  margin-bottom: 0px;
+.sweet-overlay {
+  z-index: 1031;
 }
 
-.answerbox-question-text {
-  font-weight: bold;
-  color: $gray-darker;
+#create-group {
+  margin-top: 5px;
 }
 
-.user-displayname {
-  margin-top: 12px;
-  margin-bottom: 2px;
-}
-
-.user-username {
-  margin-top: 0px;
-  margin-bottom: 2px;
-}
-
-.user-admin {
+.j2-delete {
   color: $brand-danger;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 80%;
-}
-
-.answer-box .text-muted a, .answer-box .text-muted a:hover {
-  color: $gray-dark;
   text-decoration: none;
 }
 
-.navbar .nav .badge {
-  padding: 3px 6px 3px;
-  background-color: $navbar-inverse-link-active-bg;
-}
-
-.navbar .nav .active .badge {
-  padding: 3px 6px 3px;
-  background-color: $navbar-inverse-bg;
+.j2-navbar {
+  margin-bottom: 0px;
 }

@@ -3,11 +3,12 @@
 ## Requirements
 
 - UNIX-like system (Linux, *BSD, ...)
-- ruby 1.9.3+
+- Ruby 2.0.0+
 - Bundler
-- PostgreSQL or MySQL
+- PostgreSQL
+- Redis
 
-## Installation
+## Installation (production)
 
 ### Database
 
@@ -21,20 +22,6 @@
 Try connecting to the database:
 
     $ psql -U justask -d justask_production
-
-#### MySQL
-
-    $ mysql -u root -p
-    # change 'hack me' in the command below to a real password
-    mysql> CREATE USER 'justask'@'localhost' IDENTIFIED BY 'hack me';
-    mysql> SET storage_engine=INNODB;
-    mysql> CREATE DATABASE IF NOT EXISTS `justask_production` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`;
-    mysql> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, LOCK TABLES ON `justask_production`.* TO 'justask'@'localhost';
-    mysql> \q
-
-Try connecting to the database:
-
-    $ mysql -u justask -p -D justask_production
 
 ### justask
 
@@ -55,26 +42,19 @@ Try connecting to the database:
 
 #### Database Configuration
 
-    # PostgreSQL only:
     $ cp config/database.yml.postgres config/database.yml
-
-    # MySQL only:
-    $ cp config/database.yml.mysql config/database.yml
-
-    # MySQL and remote PostgreSQL only:
     $ vi config/database.yml
 
-    # Both:
     # Make database.yml readable only for you
     chmod o-rwx config/database.yml
 
 #### Install Gems
 
-    # For PostgreSQL (note: the option says "without ... mysql")
+    # Deployment:
     $ bundle install --deployment --without development test mysql
 
-    # Or, if you use MySQL
-    $ bundle install --deployment --without development test postgres
+    # Development:
+    $ bundle install --without production mysql
 
 #### Initialize Database
 
@@ -87,8 +67,7 @@ Try connecting to the database:
 #### Run the server
 
     # Production mode:
-    $ mkdir -p ./tmp/sockets/
-    $ bundle exec unicorn -E production -l unix:./tmp/sockets/justask.sock
+    $ foreman start
 
     # Development mode:
     $ bundle exec rails server
@@ -103,3 +82,12 @@ If you want to remove admin status from a certain user, you can do this:
 
     $ bundle exec rake 'justask:deadmin[get_rekt]' RAILS_ENV=production
 
+Add/remove moderators:
+
+    $ bundle exec rake 'justask:mod[someone_else]' RAILS_ENV=production
+    $ bundle exec rake 'justask:demod[someone_else]' RAILS_ENV=production
+
+Add/remove supporters:
+
+    $ bundle exec rake 'justask:sup[someone_else]' RAILS_ENV=production
+    $ bundle exec rake 'justask:desup[someone_else]' RAILS_ENV=production

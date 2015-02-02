@@ -1,0 +1,46 @@
+.panel.panel-default
+  %img.profile--avatar{src: @user.profile_picture.url(:large)}
+  - if @user.admin?
+    .profile--panel-badge.panel-badge-danger
+      %i.fa.fa-flask
+      Admin
+  - if @user.moderator?
+    .profile--panel-badge.panel-badge-success
+      %i.fa.fa-users
+      Mod
+  - if @user.supporter?
+    .profile--panel-badge.panel-badge-warning
+      %i.fa.fa-star
+      Supporter
+  - if @user.blogger?
+    .profile--panel-badge.panel-badge-info
+      %i.fa.fa-pencil
+      Blogger
+  - if @user.banned?
+    .profile--panel-badge.panel-badge-default
+      %i.fa.fa-ban
+      Banned
+  - if @user.following? current_user
+    .profile--panel-badge.panel-badge-default
+      Follows you
+  .panel-body
+    - if @user.display_name.blank?
+      .profile--displayname
+        = @user.screen_name
+    - else
+      .profile--displayname
+        = @user.display_name
+      .profile--username
+        = @user.screen_name
+    - unless @user.bio.blank?
+      %p.profile--text= markdown @user.bio
+    - unless @user.website.blank?
+      %p.profile--text
+        %i.fa.fa-globe
+        %a{href: @user.website}= @user.display_website
+    - unless @user.location.blank?
+      %p.profile--text
+        %i.fa.fa-location-arrow
+        = @user.location
+    = render 'user/actions', user: @user, type: :follower
+= render 'user/stats', user: @user

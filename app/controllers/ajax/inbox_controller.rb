@@ -1,7 +1,28 @@
 class Ajax::InboxController < ApplicationController
-  def destroy
+  def create
+    unless user_signed_in?
+      @status = :noauth
+      @message = "requires authentication"
+      @success = false
+      return
+    end
+
+    question = Question.create!(content: QuestionGenerator.generate,
+                                author_is_anonymous: true,
+                                author_name: 'justask',
+                                user: current_user)
+
+    inbox = Inbox.create!(user: current_user, question_id: question.id, new: true)
+
+    @status = :okay
+    @message = "Successfully added new question."
+    @success = true
+    @render = render_to_string(partial: 'inbox/entry', locals: { i: inbox })
+    inbox.update(new: false)
+  end
+
+  def remove
     params.require :id
-    params.require :answer
 
     inbox = Inbox.find(params[:id])
 
@@ -11,19 +32,34 @@ class Ajax::InboxController < ApplicationController
       @success = false
       return
     end
-    
-    answer = Answer.create(content: params[:answer],
-                           user: current_user,
-                           question: inbox.question)
 
-    unless current_user.nil?
-      current_user.increment! :answered_count
+    begin
+      inbox.remove
+    rescue
+      @status = :err
+      @message = "An error occurred"
+      @success = false
+      return
     end
 
-    Inbox.destroy inbox.id
+    @status = :okay
+    @message = "Successfully deleted question."
+    @success = true
+  end
+
+  def remove_all
+    begin
+      Inbox.where(user: current_user).each { |i| i.remove }
+    rescue
+      @status = :err
+      @message = "An error occurred"
+      @success = false
+      return
+    end
 
     @status = :okay
-    @message = "Successfully answered question."
+    @message = "Successfully deleted questions."
     @success = true
+    render 'ajax/inbox/remove'
   end
 end

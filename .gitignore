@@ -18,6 +18,10 @@ coverage/
 .idea/
 
 /public/assets
+/public/system
 
 # damn vim backup files
 *~
+
+# every fucking time, dolphin
+.directory

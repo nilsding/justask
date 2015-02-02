@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.7'
+gem 'rails', '4.1.8'
 
 gem 'pg', group: :postgres
 gem 'mysql2', group: :mysql
@@ -20,9 +20,12 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'haml'
 gem 'bootstrap-sass', '~> 3.2.0.1'
 gem 'bootswatch-rails'
+gem 'sweetalert-rails'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'http_accept_language'
 gem 'devise'
+gem 'devise-async'
 gem 'bootstrap_form'
 gem 'font-kit-rails'
 gem 'nprogress-rails'
@@ -30,11 +33,40 @@ gem 'font-awesome-rails', '~> 4.2.0.0'
 gem 'rails-assets-growl'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem "paperclip", "~> 4.2"
+gem 'delayed_paperclip'
 
 gem 'ruby-progressbar'
 
+gem 'rails_admin'
+
+gem 'sidekiq'
+gem 'sinatra', require: false
+
+gem 'questiongenerator', git: 'https://github.com/justask/questiongenerator.git'
+
+gem 'sanitize'
+gem 'redcarpet'
+
+# OmniAuth and providers
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-tumblr'
+
+# OAuth clients
+gem 'twitter'
+gem 'tumblr_client'
+
+gem 'foreman'
+gem 'redis'
+
 group :development do
   gem 'spring'
+
+  # Capistrano for deployment
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rvm', group: :rvm
+  gem 'capistrano-rails', '~> 1.1'
 end
 
 group :production do
@@ -44,11 +76,13 @@ end
 group :development, :test do
   gem 'thin'
   gem 'rspec-rails', '~> 3.0.0'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', require: false
   gem 'faker'
   gem 'capybara'
   gem 'poltergeist'
-  gem 'simplecov'
+  gem 'simplecov', require: false
+  gem 'simplecov-json', require: false
+  gem 'simplecov-rcov', require: false
   gem 'database_cleaner'
 end
 

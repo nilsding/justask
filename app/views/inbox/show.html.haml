@@ -1,22 +1,35 @@
 .container.j2-page
-  = render 'layouts/messages'
-  - @inbox.each do |i|
-    .panel.panel-default.inbox-box{'data-id' => i.id}
-      .panel-body
-        %p
-          %strong
-            = user_screen_name i.question.user, i.question.author_is_anonymous
-          asked:
-        %p
-          %strong
-            = i.question.content
-        %textarea.form-control{name: 'ib-answer', 'data-id' => i.id}
-        %br/
-        %button.btn.btn-success{name: 'ib-answer', 'data-ib-id' => i.id}
-          Answer
+  .row
+    .col-md-3.col-xs-12.col-sm-3
+      .panel.panel-default.inbox--panel
+        .panel-heading
+          %h3.panel-title Out of questions?
+        .panel-body
+          %button.btn.btn-block.btn-info{type: :button, id: 'ib-generate-question'} Get new question
+      .panel.panel-default.inbox--panel
+        .panel-heading
+          %h3.panel-title Share
+        .panel-body
+          %a.btn.btn-block.btn-primary{target: '_blank', href: "https://twitter.com/intent/tweet?text=Ask%20me%20anything%21&url=#{show_user_profile_url(current_user.screen_name)}"}
+            %i.fa.fa-twitter
+            Share on Twitter
+          %a.btn.btn-block.btn-primary{target: '_blank', href: "http://www.tumblr.com/share/link?url=#{show_user_profile_url(current_user.screen_name)}&name=Ask%20me%20anything%21"}
+            %i.fa.fa-tumblr
+            Share on Tumblr
+      .panel.panel-default.warning--panel
+        .panel-heading
+          %h3.panel-title Actions
+        .panel-body
+          %button.btn.btn-block.btn-danger{type: :button, id: 'ib-delete-all', disabled: (@inbox.empty? ? 'disabled' : nil), data: { ib_count: @inbox.count }} Delete all questions
+    .col-md-9.col-xs-12.col-sm-9
+      = render 'layouts/messages'
+      #entries
+        - @inbox.each do |i|
+          = render 'inbox/entry', i: i
 
-  - if @inbox.empty?
+        - if @inbox.empty?
 
-    Nothing to see here.
+          Nothing to see here.
 
 = render "shared/links"
+- @inbox.update_all(new: false)
