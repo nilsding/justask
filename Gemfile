@@ -58,6 +58,9 @@ gem 'tumblr_client'
 gem 'foreman'
 gem 'redis'
 
+# lewd stuff
+gem 'spoiler-alert-rails'
+
 group :development do
   gem 'spring'
 

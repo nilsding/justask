@@ -9,6 +9,7 @@
 #= require cheet
 #= require jquery.guillotine
 #= require sweet-alert
+#= require spoiler
 # local requires to be seen by everyone:
 #= require_tree ./answerbox
 #= require_tree ./questionbox
@@ -41,6 +42,7 @@ $(document).on "click", "button#create-account", ->
 
 _ready = ->
   sweetAlertInitialize()
+  $('.spoiler').spoilerAlert()
 
 $(document).ready _ready
 $(document).on 'page:load', _ready
