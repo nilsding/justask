@@ -36,7 +36,8 @@ class UserController < ApplicationController
     user_attributes = params.require(:user).permit(:privacy_allow_anonymous_questions,
                                                    :privacy_allow_public_timeline,
                                                    :privacy_allow_stranger_answers,
-                                                   :privacy_show_in_search)
+                                                   :privacy_show_in_search,
+                                                   :privacy_allow_nsfw_questions)
     if current_user.update_attributes(user_attributes)
       flash[:success] = 'Your privacy settings have been updated!'
     else
