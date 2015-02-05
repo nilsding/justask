@@ -20,11 +20,11 @@
                 ·
                 %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
                   #{a.question.answer_count} answers
-          .answerbox--question-text.spoiler
+          .answerbox--question-text{class: a.question.nsfw? ? 'spoiler' : nil}
             = a.question.content
   .panel-body
     - if @display_all.nil?
-      .answerbox--answer-text.spoiler
+      .answerbox--answer-text{class: a.nsfw? ? 'spoiler' : nil}
         = markdown a.content[0..255]
         - if a.content.length > 255
           [...]
@@ -32,7 +32,7 @@
             %a.btn.btn-primary{href: show_user_answer_path(a.user.screen_name, a.id)}
               Read the entire answer
     - else
-      .answerbox--answer-text.spoiler
+      .answerbox--answer-text{class: a.nsfw? ? 'spoiler' : nil}
         = markdown a.content
     - if @user.nil?
       .row
