@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 20150205153753) do
     t.boolean  "blogger",                           default: false
     t.boolean  "nsfw",                              default: false
     t.boolean  "show_nsfw",                         default: false
+    t.boolean  "privacy_allow_nsfw_questions",      default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
