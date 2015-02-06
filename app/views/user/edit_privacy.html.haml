@@ -5,10 +5,12 @@
     .panel.panel-default
       .panel-body
         = bootstrap_form_for(current_user, url: {action: "edit_privacy"}, method: "patch") do |f|
-
+          %h4 Permissions
           = f.check_box :privacy_allow_anonymous_questions, label: "Allow anonymous questions"
-          = f.check_box :privacy_allow_public_timeline, label: "Show your answers in the public timeline"
           = f.check_box :privacy_allow_stranger_answers, label: "Allow other people to answer your questions"
+          %h4 Public Timeline
+          = f.check_box :privacy_allow_public_timeline, label: "Show your answers in the public timeline"
+          %h4 Not Safe For Work (NSFW)
           = f.check_box :privacy_allow_nsfw_questions, label: "Allow other people to ask you NSFW questions"
 
           = f.submit "Save settings", class: 'btn btn-primary'
