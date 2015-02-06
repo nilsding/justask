@@ -9,6 +9,9 @@
       .modal-body
         %textarea.form-control{:name => "qb-all-question", :placeholder => "Type your question here…"}
       .modal-footer
+        %label
+          %input{type: 'checkbox', name: 'qb-nsfw', checked: :checked }
+          NSFW
         - if current_user.groups.count > 0
           %label
             Choose group:
