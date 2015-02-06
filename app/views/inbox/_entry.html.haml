@@ -41,3 +41,7 @@
         You have not connected any services yet. Visit your
         = link_to "service settings", services_path
         to connect one.
+    %h4 NSFW
+      %label
+        %input{type: 'checkbox', name: 'ib-nsfw', checked: :checked, data: { ib_id: i.id }}
+        Mark as NSFW
