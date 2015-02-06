@@ -35,4 +35,13 @@ class Answer < ActiveRecord::Base
   def notification_type(*_args)
     Notifications::QuestionAnswered
   end
+
+  # @return 'spoiler' or nil
+  def nsfw_spoiler
+    return nil unless self.nsfw
+    if user_signed_in?
+      return nil if current_user.show_nsfw
+    end
+    'spoiler'
+  end
 end

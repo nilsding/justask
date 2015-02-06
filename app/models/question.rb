@@ -14,4 +14,13 @@ class Question < ActiveRecord::Base
     return false if Inbox.where(question: self).count > 1
     true
   end
+
+  # @return 'spoiler' or nil
+  def nsfw_spoiler
+    return nil unless self.nsfw
+    if user_signed_in?
+      return nil if current_user.show_nsfw
+    end
+    'spoiler'
+  end
 end
