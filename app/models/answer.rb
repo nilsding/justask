@@ -37,9 +37,9 @@ class Answer < ActiveRecord::Base
   end
 
   # @return 'spoiler' or nil
-  def nsfw_spoiler
+  def nsfw_spoiler(current_user)
     return nil unless self.nsfw
-    if user_signed_in?
+    unless user.nil?
       return nil if current_user.show_nsfw
     end
     'spoiler'
