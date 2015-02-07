@@ -26,6 +26,11 @@
           %a{href: '#', data: { a_id: a.id, action: 'ab-destroy' }}
             %i.fa.fa-trash-o
             Delete
+      - if current_user.mod? and !a.nsfw?
+        %li
+          %a{href: '#', data: { a_id: a.id, action: 'ab-nsfw' }}
+            %i.fa.fa-eye-slash
+            Mark as NSFW
       - unless a.user == current_user
         %li
           %a{href: '#', data: { a_id: a.id, action: 'ab-report' }}
