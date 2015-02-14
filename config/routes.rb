@@ -87,6 +87,13 @@ Rails.application.routes.draw do
   match '/notifications(/:type)', to: 'notifications#index', via: :get, as: :notifications, defaults: {type: 'all'}
 
   match '/inbox', to: 'inbox#show', via: 'get'
+
+  match '/welcome', to: 'welcome#show', via: 'get', as: :welcome_index
+  match '/welcome/inbox', to: 'welcome#inbox', via: 'get', as: :welcome_inbox
+  match '/welcome/answer', to: 'welcome#answer', via: 'get', as: :welcome_answer
+  match '/welcome/profile', to: 'welcome#profile', via: 'get', as: :welcome_profile
+  match '/welcome/services', to: 'welcome#services', via: 'get', as: :welcome_services
+  match '/welcome/finished', to: 'welcome#finish', via: 'get', as: :welcome_finish
   
   match '/user/:username(/p/:page)', to: 'user#show', via: 'get', defaults: {page: 1}
   match '/@:username(/p/:page)', to: 'user#show', via: 'get', as: :show_user_profile_alt, defaults: {page: 1}
