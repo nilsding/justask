@@ -14,7 +14,6 @@ body {
 @import "scss/user";
 @import "scss/notifications";
 @import "scss/groups";
-@import "scss/welcome";
 
 .j2-page {
   padding-top: 30px;
@@ -116,4 +115,14 @@ body {
     padding-left: 0px;
     padding-right: 0px;
   }
+}
+
+.welcome--container {
+  background-color: darken($navbar-inverse-bg, 10%);
+  color: #fff;
+  text-align: center;
+}
+
+.welcome--container p {
+  font-size: 21px;
 }
