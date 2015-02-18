@@ -1,5 +1,6 @@
 .j2-page {background-color: #171717;}
 body {background-color: #171717; color: #ddd;}
+.panel-badge-info {background-color: #30689c}
 .panel-body {background-color: #423E3E;}
 .panel-heading {background-color: #4F4A4A !important;}
 .profile--displayname {color: #9C9C9C;}
@@ -10,7 +11,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {color: #ddd;}
 .answerbox--question-text {color: #ccc;}
 .answerbox--answer-text {color: #eee;}
 .panel-title {color: #eee;}
-.btn-default {color: white; background-color: #4F4A4A; border-color: #4F4A4A;}
+.btn-default {color: white; background-color: #4F4A4A; border: none;}
+.btn-info {background-color: #639bcf}
 .modal-content {background-color: #171717;}
 .close {color: #eee;}
 .dropdown-menu {background-color: #262626;}
@@ -18,12 +20,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {color: #ddd;}
 .dropdown-menu>li>a {color: #ddd;}
 .notification--dropdown-text {color: #ccc;}
 .panel-footer {background-color: #4F4A4A; color: #ccc;}
-.navbar-inverse {background-color: #7E57C2;}
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {background-color: #9575CD;}
+.navbar-inverse {background-color: #488AC7;}
+.navbar, .panel, button, .btn {box-shadow: none;}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {background-color: #30689c;color:#FFF;}
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {background-color: #7E57C2;}
-a {color: #7E57C2;}
+.navbar .nav .badge {background-color: #244e75;}
+.navbar .nav .active .badge, li.dropdown.open a.dropdown-toggle span.badge {background-color: #244e75;}
+a {color: #639bcf;}
+.entry-subtext {color: #639bcf;}
 .btn-primary {background-color: #7E57C2;}
-.entry-subtext {color: #7E57C2;}
 .profile--header {background-color: #673AB7;}
 .sweet-alert {background-color: #171717;}
 .sweet-alert h2 {color: #eee;}
