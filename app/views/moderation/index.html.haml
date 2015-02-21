@@ -1,19 +1,19 @@
 = render 'moderation/moderation_nav'
 .jumbotron.j2-jumbo.text-center
   .container
-    %h2 Moderation Panel
+    %h1 Moderation Panel
     .row
       .col-md-3.col-sm-3.col-xs-6.text-center
-        %h3= @reports.count
+        %h2.moderation--count= @reports.count
         %p Reports
       .col-md-3.col-sm-3.col-xs-6.text-center
-        %h3= Report.where(deleted: true).count
+        %h2.moderation--count= Report.where(deleted: true).count
         %p Done
       .col-md-3.col-sm-3.col-xs-6.text-center
-        %h3= Report.where(type: "Reports::Answer", deleted: false).count
+        %h2.moderation--count= Report.where(type: "Reports::Answer", deleted: false).count
         %p Answers
       .col-md-3.col-sm-3.col-xs-6.text-center
-        %h3= Report.where(type: "Reports::User", deleted: false).count
+        %h2.moderation--count= Report.where(type: "Reports::User", deleted: false).count
         %p Users
 .container.j2-page
   .row
