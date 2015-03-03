@@ -64,6 +64,8 @@ Rails.application.routes.draw do
   match '/settings/privacy', to: 'user#edit_privacy', via: :get, as: :edit_user_privacy
   match '/settings/privacy', to: 'user#update_privacy', via: :patch, as: :update_user_privacy
 
+  match '/settings/find_friends', to: 'find_friends#index', via: :get, as: :find_friends
+
   namespace :ajax do
     match '/ask', to: 'question#create', via: :post, as: :ask
     match '/generate_question', to: 'inbox#create', via: :post, as: :generate_question

@@ -6,6 +6,8 @@
         = nav_entry "Profile", edit_user_profile_path
         = nav_entry "Privacy", edit_user_privacy_path
         = nav_entry "Sharing", services_path
+        - if current_user.services.count > 0
+          = nav_entry "Find friends", find_friends_path
 
   
   .hidden-xs= render "shared/links"
