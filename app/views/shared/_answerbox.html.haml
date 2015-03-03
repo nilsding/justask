@@ -19,7 +19,20 @@
           %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
             #{a.question.answer_count} answers    
     .header
-      = a.question.content              
+      = a.question.content
+
+    - if @display_all.nil?  
+      .description
+        = markdown a.content[0..255]
+        - if a.content.length > 255
+          [...]
+          %p
+            %a.ui.purple.button{href: show_user_answer_path(a.user.screen_name, a.id)}
+              Read the entire answer
+    - else
+      .description
+        = markdown a.content          
+
 
 .panel.panel-default.answerbox{data: { id: a.id }}
   - if @question.nil?
