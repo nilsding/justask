@@ -31,7 +31,20 @@
               Read the entire answer
     - else
       .description
-        = markdown a.content          
+        = markdown a.content
+
+    - if @user.nil?
+      .content
+        %a{href: show_user_profile_path(a.user.screen_name)}
+          %img.image.circular.small.floated.left
+        .content
+          Answered by
+          = user_screen_name a.user
+          %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+            = time_ago_in_words(a.created_at)
+          ago
+
+
 
 
 .panel.panel-default.answerbox{data: { id: a.id }}
