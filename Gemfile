@@ -18,8 +18,14 @@ gem 'sdoc', '~> 0.4.1', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'haml'
+
+# TODO: remove this once UI is ported to Semantic
 gem 'bootstrap-sass', '~> 3.2.0.1'
 gem 'bootswatch-rails'
+
+# I hope this is working well enough
+gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass', branch: 'v1.0beta'
+
 gem 'sweetalert-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
