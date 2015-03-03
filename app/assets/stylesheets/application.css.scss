@@ -47,6 +47,8 @@ $navbar-inverse-toggle-border-color: #512da8;
 body { padding-top: $navbar-height; }
 @import "bootswatch/paper/bootswatch";
 
+@import "semantic-ui";
+
 @import "base";
 
 @import "font-awesome";

@@ -3,6 +3,7 @@
 #= require jquery.turbolinks
 #= require turbolinks
 #= require bootstrap
+#= require semantic-ui
 #= require nprogress
 #= require nprogress-turbolinks
 #= require growl
