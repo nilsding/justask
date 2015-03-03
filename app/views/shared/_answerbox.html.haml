@@ -18,8 +18,8 @@
           ·
           %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
             #{a.question.answer_count} answers    
-      .header
-        = a.question.content              
+    .header
+      = a.question.content              
 
 .panel.panel-default.answerbox{data: { id: a.id }}
   - if @question.nil?
