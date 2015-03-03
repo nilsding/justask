@@ -34,15 +34,16 @@
         = markdown a.content
 
     - if @user.nil?
-      .content
-        %a{href: show_user_profile_path(a.user.screen_name)}
-          %img.image.circular.small.floated.left{src: gravatar_url(a.user)}
+      .comment
+        %a.avatar{href: show_user_profile_path(a.user.screen_name)}
+          %img.small.circular.image{src: gravatar_url(a.user)}
         .content
-          Answered by
-          = user_screen_name a.user
-          %a{href: show_user_answer_path(a.user.screen_name, a.id)}
-            = time_ago_in_words(a.created_at)
-          ago
+          %a.author{href: show_user_answer_path(a.user.screen_name, a.id)}
+          .text
+            Answered this
+            %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+              = time_ago_in_words(a.created_at)
+            ago
 
 
 
