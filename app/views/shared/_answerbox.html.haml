@@ -36,7 +36,7 @@
     - if @user.nil?
       .content
         %a{href: show_user_profile_path(a.user.screen_name)}
-          %img.image.circular.small.floated.left
+          %img.image.circular.small.floated.left{src: gravatar_url(a.user)}
         .content
           Answered by
           = user_screen_name a.user
