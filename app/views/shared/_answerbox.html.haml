@@ -1,9 +1,9 @@
 .ui.fluid.card
   .content
-    .ui.header
-      - unless a.question.author_is_anonymous
-        %a{href: show_user_profile_path(a.question.user.screen_name)}
-          %img.ui.avatar.image{src: gravatar_url(a.question.user)}
+    - unless a.question.author_is_anonymous
+      %a{href: show_user_profile_path(a.question.user.screen_name)}
+        %img.ui.circular.small.image{src: gravatar_url(a.question.user)}
+      .ui.header  
         = user_screen_name a.question.user, a.question.author_is_anonymous
         asked
         - if @user.nil? or a.question.author_is_anonymous
@@ -17,8 +17,8 @@
             ·
             %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
               #{a.question.answer_count} answers    
-      .sub.header
-        = a.question.content              
+        .sub.header
+          = a.question.content              
 
 .panel.panel-default.answerbox{data: { id: a.id }}
   - if @question.nil?
