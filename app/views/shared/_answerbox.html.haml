@@ -6,8 +6,12 @@
           %a.avatar{href: show_user_profile_path(a.question.user.screen_name)}
             %img{src: gravatar_url(a.question.user)}
         .content
-          %a.author
-            = a.question.user, a.question.author_is_anonymous
+          - if a.question.author_is_anonymous
+            %a.author 
+              = a.question.user.screen_name
+          - else
+            %a.author{href: show_user_profile_path(a.question.user.screen_name)} 
+              = a.question.user.screen_name
           %metadata
             asked
             - if @user.nil? or a.question.author_is_anonymous
