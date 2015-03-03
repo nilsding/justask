@@ -40,6 +40,7 @@
             %img.small.circular.image{src: gravatar_url(a.user)}
           .content
             %a.author{href: show_user_answer_path(a.user.screen_name, a.id)}
+              = user_screen_name a.user
             .text
               Answered this
               %a{href: show_user_answer_path(a.user.screen_name, a.id)}
