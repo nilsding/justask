@@ -50,7 +50,7 @@
           Control Panel
         %a.item{href: sidekiq_web_path}
           Sidekiq
-    %a.item{href: destroy_user_session_path, data-method: :delete}
+    %a.item{href: destroy_user_session_path, data: { method: :delete}}
       = semantic_icon('sign out')
       Logout
   - else
