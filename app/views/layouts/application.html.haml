@@ -21,6 +21,9 @@
     = csrf_meta_tags
   %body.pushable
     = render 'layouts/header'
+
+    .toggle
+      = semantic_icon(:content)
     .pusher= yield
     - if Rails.env.development?
       %hr
