@@ -6,7 +6,7 @@
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.user)}
-            = notification.target.user
+            = notification.target.user.screen_name
           answered 
           %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.id)}
             your question
@@ -22,8 +22,8 @@
         %img{src: gravatar_url(notification.target.source)}
       .content
         .summary
-          %a.user{href: show_user_profile_path(notification.target.user)}
-            = notification.target.user
+          %a.user{href: show_user_profile_path(notification.target.source)}
+            = notification.target.source.screen_name
           followed you
           .date= time_ago_in_words notification.target.created_at
     - when "Smile"
@@ -32,7 +32,7 @@
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.user)}
-            = notification.target.user
+            = notification.target.user.screen_name
           smiled 
           %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id)}
             your answer
@@ -49,7 +49,7 @@
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.user)}
-            = notification.target.user
+            = notification.target.user.screen_name
           commented on 
           %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id)}
             your answer
