@@ -1,61 +1,62 @@
-%li.list-group-item{class: (notification.new? ? 'list-group-item-warning' : '')}
-  .media
-    - case notification.target_type
-      - when "Answer"
-        .pull-left
-          %img.img-rounded.notification--img{src: gravatar_url(notification.target.user)}
-        .media-body
-          %h6.media-heading.notification--user
-            = user_screen_name notification.target.user
-          %p.notification--text
-            answered
-            %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.id), title: "#{notification.target.content[0..40]}...", data: { toggle: :tooltip, placement: :top }}
-              your question
-            %span{title: notification.target.created_at, data: { toggle: :tooltip, placement: :bottom }}
-              = time_ago_in_words notification.target.created_at
-            ago
-          .notification--icon
-            %i.fa.fa-exclamation
-      - when "Relationship"
-        .pull-left
-          %img.img-rounded.notification--img{src: gravatar_url(notification.target.source)}
-        .media-body
-          %h6.media-heading.notification--user
-            = user_screen_name notification.target.source
-          %p.notification--text
-            followed you
-            %span{title: notification.target.created_at, data: { toggle: :tooltip, placement: :bottom }}
-              = time_ago_in_words notification.target.created_at
-            ago
-          .notification--icon
-            %i.fa.fa-users
-      - when "Smile"
-        .pull-left
-          %img.img-rounded.notification--img{src: gravatar_url(notification.target.user)}
-        .media-body
-          %h6.media-heading.notification--user
-            = user_screen_name notification.target.user
-          %p.notification--text
-            smiled at
-            %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id), title: "#{notification.target.answer.content[0..40]}...", data: { toggle: :tooltip, placement: :top }}
-              your answer
-            %span{title: notification.target.created_at, data: { toggle: :tooltip, placement: :bottom }}
-              = time_ago_in_words notification.target.created_at
-            ago
-          .notification--icon
-            %i.fa.fa-smile-o
-      - when "Comment"
-        .pull-left
-          %img.img-rounded.notification--img{src: gravatar_url(notification.target.user)}
-        .media-body
-          %h6.media-heading.notification--user
-            = user_screen_name notification.target.user
-          %p.notification--text
-            commented on
-            %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id), title: "#{notification.target.answer.content[0..40]}...", data: { toggle: :tooltip, placement: :top }}
-              your answer
-            %span{title: notification.target.created_at, data: { toggle: :tooltip, placement: :bottom }}
-              = time_ago_in_words notification.target.created_at
-            ago
-          .notification--icon
-            %i.fa.fa-comments
+.event
+  - case notification.target_type
+    - when "Answer"
+      .label
+        %img{src: gravatar_url(notification.target.user)}
+      .content
+        .summary
+          %a.user{href: show_user_profile_path(notification.target.user)}
+            = notification.target.user
+          answered 
+          %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.id)}
+            your question
+          .date= time_ago_in_words notification.target.created_at
+        .extra.text
+          - if notification.target.content.length > 255
+            = notification.target.content[0..255]
+            ...
+          - else
+            = notification.target.content
+    - when "Relationship"
+      .label
+        %img{src: gravatar_url(notification.target.user)}
+      .content
+        .summary
+          %a.user{href: show_user_profile_path(notification.target.user)}
+            = notification.target.user
+          followed you
+          .date= time_ago_in_words notification.target.created_at
+    - when "Smile"
+      .label
+        = semantic_icon(:smile)
+      .content
+        .summary
+          %a.user{href: show_user_profile_path(notification.target.user)}
+            = notification.target.user
+          smiled 
+          %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id)}
+            your answer
+          .date= time_ago_in_words notification.target.created_at
+        .extra.text
+          - if notification.target.answer.content.length > 255
+            = notification.target.answer.content[0..255]
+            ...
+          - else
+            = notification.target.answer.content
+    - when "Comment"
+      .label
+        = semantic_icon('comments outline')
+      .content
+        .summary
+          %a.user{href: show_user_profile_path(notification.target.user)}
+            = notification.target.user
+          commented on 
+          %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id)}
+            your answer
+          .date= time_ago_in_words notification.target.created_at
+        .extra.text
+          - if notification.target.content.length > 255
+            = notification.target.content[0..255]
+            ...
+          - else
+            = notification.target.content
