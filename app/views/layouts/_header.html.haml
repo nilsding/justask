@@ -39,9 +39,20 @@
           Comments
         %a.item{href: notifications_path('relationship')}
           New Followers
-    %a.item{href: moderation_path}
-      = semantic_icon(:protect)
-      Moderation Panel    
+    .item
+      .ui.small.inverted.header
+        Moderation
+      .menu
+        %a.item{href: moderation_path}
+          View All
+        %a.item{href: moderation_path('answer')}
+          Answers
+        %a.item{href: moderation_path('comment')}
+          Comments
+        %a.item{href: moderation_path('user')}
+          Users
+        %a.item{href: moderation_path('question')}
+          Questions      
     .item
       .ui.small.inverted.header
         Administration
