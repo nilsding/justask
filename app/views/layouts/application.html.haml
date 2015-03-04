@@ -19,9 +19,9 @@
       - if current_user.mod?
         = javascript_include_tag 'moderation', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body.pushable
     = render 'layouts/header'
-    = yield
+    .pusher= yield
     - if Rails.env.development?
       %hr
       .container
