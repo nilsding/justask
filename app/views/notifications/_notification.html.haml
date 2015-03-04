@@ -2,7 +2,7 @@
   - case notification.target_type
     - when "Answer"
       .label
-        %img{src: gravatar_url(notification.target.user)}
+        %img{src: notification.target.user.profile_picture.url(:small)}
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.user)}
@@ -19,7 +19,7 @@
             = notification.target.content
     - when "Relationship"
       .label
-        %img{src: gravatar_url(notification.target.source)}
+        %img{src: notification.target.source.profile_picture.url(:small)}
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.source)}
