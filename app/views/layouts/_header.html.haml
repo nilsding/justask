@@ -3,7 +3,7 @@
     .ui.large.inverted.header
       = APP_CONFIG['site_name']
   .item
-    %a.ui.logo.image.small{href: show_user_profile_path(current_user.screen_name)}
+    %a.ui.logo.icon.image{href: show_user_profile_path(current_user.screen_name)}
       %img{src: current_user.profile_picture.url(:small)}
     %a{href: show_user_profile_path(current_user.screen_name)}
       = current_user.screen_name
