@@ -2,11 +2,9 @@
 .container.j2-page
   = render 'notification_tabs'
   .col-md-9.col-xs-12.col-sm-9
-    .ui.fluid.card
-      .content
-        .ui.feed
-          - @notifications.each do |notification|
-            = render 'notifications/notification', notification: notification
+    .ui.feed
+      - @notifications.each do |notification|
+        = render 'notifications/notification', notification: notification
 
     #pagination= will_paginate @notifications, renderer: BootstrapPagination::Rails, page_links: false
 
