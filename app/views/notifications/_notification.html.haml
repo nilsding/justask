@@ -19,7 +19,7 @@
             = notification.target.content
     - when "Relationship"
       .label
-        %img{src: gravatar_url(notification.target.user)}
+        %img{src: gravatar_url(notification.target.source)}
       .content
         .summary
           %a.user{href: show_user_profile_path(notification.target.user)}
