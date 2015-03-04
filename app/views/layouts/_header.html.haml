@@ -7,6 +7,12 @@
       %img{src: current_user.profile_picture.url(:small)}
     %a{href: show_user_profile_path(current_user.screen_name)}
       = current_user.screen_name
+  %a.item{href: edit_user_registration_path}
+    = semantic_icon(:settings)
+    Settings
+  %a.item{href: '/inbox'}
+    = semantic_icon(:inbox)
+    Inbox      
   .item
     .ui.small.inverted.header
       Timelines
@@ -18,9 +24,6 @@
       - current_user.groups.each do |group|
         %a.item{href: group_timeline_path(group.name)}
           = group.display_name
-  %a.item{href: '/inbox'}
-    = semantic_icon(:inbox)
-    Inbox
   .item
     .ui.small.inverted.header
       Notifications
@@ -34,7 +37,19 @@
       %a.item{href: notifications_path('comment')}
         Comments
       %a.item{href: notifications_path('relationship')}
-        New Followers          
+        New Followers
+  %a.item{href: moderation_path}
+    = semantic_icon(:protect)
+    Moderation Panel    
+  .item
+    .ui.small.inverted.header
+      Administration
+    .menu
+      %a.item{href: rails_admin_path}
+        Control Panel
+      %a.item{href: sidekiq_web_path}
+        Sidekiq  
+
 / 
   %nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
     .container{class: ios_web_app? ? "ios-web-app" : ''}
