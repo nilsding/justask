@@ -2,56 +2,62 @@
   .item
     .ui.large.inverted.header
       = APP_CONFIG['site_name']
-  .item
-    %a.ui.logo.icon.image{href: show_user_profile_path(current_user.screen_name)}
-      %img{src: current_user.profile_picture.url(:small)}
-    %a{href: show_user_profile_path(current_user.screen_name)}
-      = current_user.screen_name
-  %a.item{href: edit_user_registration_path}
-    = semantic_icon(:settings)
-    Settings
-  %a.item{href: '/inbox'}
-    = semantic_icon(:inbox)
-    Inbox      
-  .item
-    .ui.small.inverted.header
-      Timelines
-    .menu
-      %a.item{href: root_path}
-        Main Timeline
-      %a.item{href: public_timeline_path}
-        Public Timeline
-      - current_user.groups.each do |group|
-        %a.item{href: group_timeline_path(group.name)}
-          = group.display_name
-  .item
-    .ui.small.inverted.header
-      Notifications
-    .menu
-      %a.item{href: notifications_path}
-        View All
-      %a.item{href: notifications_path('answer')}
-        Answers
-      %a.item{href: notifications_path('smile')}
-        Smiles
-      %a.item{href: notifications_path('comment')}
-        Comments
-      %a.item{href: notifications_path('relationship')}
-        New Followers
-  %a.item{href: moderation_path}
-    = semantic_icon(:protect)
-    Moderation Panel    
-  .item
-    .ui.small.inverted.header
-      Administration
-    .menu
-      %a.item{href: rails_admin_path}
-        Control Panel
-      %a.item{href: sidekiq_web_path}
-        Sidekiq
-  %a.item{href: destroy_user_session_path, method: :delete}
-    = semantic_icon('sign out')
-    Logout      
+  - if user_signed_in?    
+    .item
+      %a.ui.logo.icon.image{href: show_user_profile_path(current_user.screen_name)}
+        %img{src: current_user.profile_picture.url(:small)}
+      %a{href: show_user_profile_path(current_user.screen_name)}
+        = current_user.screen_name
+    %a.item{href: edit_user_registration_path}
+      = semantic_icon(:settings)
+      Settings
+    %a.item{href: '/inbox'}
+      = semantic_icon(:inbox)
+      Inbox      
+    .item
+      .ui.small.inverted.header
+        Timelines
+      .menu
+        %a.item{href: root_path}
+          Main Timeline
+        %a.item{href: public_timeline_path}
+          Public Timeline
+        - current_user.groups.each do |group|
+          %a.item{href: group_timeline_path(group.name)}
+            = group.display_name
+    .item
+      .ui.small.inverted.header
+        Notifications
+      .menu
+        %a.item{href: notifications_path}
+          View All
+        %a.item{href: notifications_path('answer')}
+          Answers
+        %a.item{href: notifications_path('smile')}
+          Smiles
+        %a.item{href: notifications_path('comment')}
+          Comments
+        %a.item{href: notifications_path('relationship')}
+          New Followers
+    %a.item{href: moderation_path}
+      = semantic_icon(:protect)
+      Moderation Panel    
+    .item
+      .ui.small.inverted.header
+        Administration
+      .menu
+        %a.item{href: rails_admin_path}
+          Control Panel
+        %a.item{href: sidekiq_web_path}
+          Sidekiq
+    %a.item{href: destroy_user_session_path, method: :delete}
+      = semantic_icon('sign out')
+      Logout
+  - else
+    %a.item{href: new_user_session_path}
+      Sign In
+    %a.item{href: new_user_registration_path}
+      Sign Up
 
 / 
   %nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
