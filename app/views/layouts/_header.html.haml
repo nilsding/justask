@@ -48,7 +48,10 @@
       %a.item{href: rails_admin_path}
         Control Panel
       %a.item{href: sidekiq_web_path}
-        Sidekiq  
+        Sidekiq
+  %a.item{href: destroy_user_session_path, method: :delete}
+    = semantic_icon('sign out')
+    Logout      
 
 / 
   %nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
