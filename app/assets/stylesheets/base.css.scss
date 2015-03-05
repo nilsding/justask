@@ -21,3 +21,13 @@
   background-color: #1b1c1d;
   color: #fff;
 }
+
+.login-form {
+  height: 100%;
+  display: table;
+}
+
+.login-form-content {
+  display: table-cell;
+  vertical-align: middle;		
+}
