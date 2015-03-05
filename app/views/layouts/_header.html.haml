@@ -8,9 +8,9 @@
         %img{src: current_user.profile_picture.url(:small)}
       %a{href: show_user_profile_path(current_user.screen_name)}
         = current_user.screen_name
-    %a.item{href: edit_user_registration_path}
-      = semantic_icon(:settings)
-      Settings
+    %a.item
+      = semantic_icon(:pencil)
+      Ask a question
     %a.item{href: '/inbox'}
       = semantic_icon(:inbox)
       Inbox      
@@ -39,6 +39,18 @@
           Comments
         %a.item{href: notifications_path('relationship')}
           New Followers
+    .item
+      .ui.small.inverted.header
+        Settings
+      .menu
+        %a.item{href: edit_user_registration_path}
+          Account
+        %a.item{href: edit_user_profile_path}
+          Profile
+        %a.item{href: edit_user_privacy_path}
+          Privacy
+        %a.item{href: services_path}
+          Sharing  
     .item
       .ui.small.inverted.header
         Moderation
