@@ -1,16 +1,38 @@
-.container
-  %h1 Sign in
-  = render 'layouts/messages'
+.ui.two.column.middle.aligned.relaxed.fitted.stackable.grid
+  .column
+  	%form.ui.form.segment
+  	  .field
+  	  	%label
+  	  	  Username
+  	  	.ui.left.icon.input
+  	  	  %input{type: :text, placeholder: "Username"}
+  	  	  = semantic_icon(:user)
+  	  .field
+  	  	%label
+  	  	  Password
+  	  	.ui.left.icon.input
+  	  	  %input{type: :password, placeholder: "Password"}
+  	  	  = semantic_icon(:lock)
+  	  %button.ui.blue.submit.button
+  	  	Sign In
+  .ui.vertical.divider
+  	OR
+  .center.aligned.column
+  	%button.huge.green.ui.labeled.icon.button
+  	  = semantic_icon(:signup)
+  	  Sign Up		  		    	  
 
-  = bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+%h1 Sign in
+= render 'layouts/messages'
 
-    = f.text_field :login, autofocus: true, label: "User name"
-    = f.password_field :password, autocomplete: "off", label: "Password"
+= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = f.text_field :login, autofocus: true, label: "User name"
+  = f.password_field :password, autocomplete: "off", label: "Password"
 
-    - if devise_mapping.rememberable?
-      = f.check_box :remember_me
+  - if devise_mapping.rememberable?
+    = f.check_box :remember_me
     
-    = f.submit "Sign in"
+  = f.submit "Sign in"
 
-  = render "devise/shared/links"
+= render "devise/shared/links"
 = render "shared/links"
