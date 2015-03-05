@@ -1,26 +1,28 @@
-.ui.two.column.middle.aligned.relaxed.fitted.stackable.grid
-  .column
-    %form.ui.form.segment
-      .field
-        %label
-          Username
-        .ui.left.icon.input
-          %input{type: :text, placeholder: "Username"}
-          = semantic_icon(:user)
-      .field
-        %label
-          Password
-        .ui.left.icon.input
-          %input{type: :password, placeholder: "Password"}
-          = semantic_icon(:lock)
-      %button.ui.blue.submit.button
-        Sign In
-  .ui.vertical.divider
-    OR
-  .center.aligned.column
-    %button.huge.green.ui.labeled.icon.button
-      = semantic_icon(:signup)
-      Sign Up		  		    	  
+.ui.stackable.grid
+	.eight.wide.centered.column
+		.ui.two.column.middle.aligned.relaxed.fitted.stackable.grid
+		  .column
+		    %form.ui.form.segment
+		      .field
+		        %label
+		          Username
+		        .ui.left.icon.input
+		          %input{type: :text, placeholder: "Username"}
+		          = semantic_icon(:user)
+		      .field
+		        %label
+		          Password
+		        .ui.left.icon.input
+		          %input{type: :password, placeholder: "Password"}
+		          = semantic_icon(:lock)
+		      %button.ui.blue.submit.button
+		        Sign In
+		  .ui.vertical.divider
+		    OR
+		  .center.aligned.column
+		    %button.huge.green.ui.labeled.icon.button
+		      = semantic_icon(:signup)
+		      Sign Up		  		    	  
 
 %h1 Sign in
 = render 'layouts/messages'
