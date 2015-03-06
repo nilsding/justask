@@ -1,8 +1,8 @@
 .ui.top.visible.sidebar.segment
   .ui.center.aligned.page.grid
     .three.column.stackable.row
-      .four.wide.column
-        %img.ui.medium.rounded.image{src: @user.profile_picture.url(:large)}
+      .three.wide.column
+        %img.ui.medium.rounded.centered.image{src: @user.profile_picture.url(:large)}
       .eight.wide.column
         - if @user.display_name.blank?
           %h2.ui.header
@@ -11,4 +11,4 @@
           %h2.ui.header
             = @user.display_name
             .sub.header= @user.screen_name
-      .four.wide.column
+      .five.wide.column
