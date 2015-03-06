@@ -14,16 +14,15 @@
         - unless @user.bio.blank?
           %p= markdown @user.bio  
       .five.wide.column
-        .ui.horizontal.statistic
-          .statistic
-            .value= @user.follower_count
-            .label Followers
-          .statistic
-            .value= @user.friend_count
-            .label Following
-          .statistic
-            .value= @user.asked_count
-            .label Questions asked
-          .statistic
-            .value= @user.answered_count
-            .label Answers given
+        .ui.medium.horizontal.statistic
+          .value= @user.follower_count
+          .label Followers
+        .ui.medium.horizontal.statistic
+          .value= @user.friend_count
+          .label Following
+        .ui.medium.horizontal.statistic
+          .value= @user.asked_count
+          .label Questions asked
+        .ui.medium.horizontal.statistic
+          .value= @user.answered_count
+          .label Answers given
