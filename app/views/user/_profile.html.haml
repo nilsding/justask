@@ -11,4 +11,6 @@
           %h2.ui.header
             = @user.display_name
             .sub.header= @user.screen_name
+        - unless @user.bio.blank?
+          %p= markdown @user.bio  
       .five.wide.column
