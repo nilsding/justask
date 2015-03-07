@@ -13,7 +13,7 @@
       Ask a question
     %a.item{href: '/inbox'}
       = semantic_icon(:inbox)
-      - if inbox_count > 0
+      - unless inbox_count.nil?
         .ui.horizontal.purple.label= inbox_count
       Inbox      
     .item
@@ -33,7 +33,7 @@
       .menu
         %a.item{href: notifications_path}
           View All
-          - if notification_count > 0
+          - unless notification_count.nil?
             .ui.horizontal.purple.label= notification_count
         %a.item{href: notifications_path('answer')}
           Answers
