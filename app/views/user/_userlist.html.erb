@@ -1,6 +1,6 @@
 <div class="ui four column equal height row">
   <% @users.each_with_index do |user, i| %>
     <div class="column"><%= render 'shared/userbox', user: user %></div>
-    <% if i % 4 == 0 %></div><div class="ui four column equal height row"><% end %>
+    <% if i % 4 == 0 %></div><div class="ui four column equal height row"><% end unless i == 0 %>
   <% end %>
 </div>
