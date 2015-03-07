@@ -1,10 +1,7 @@
 = render 'user/profile'
 .ui.page.grid
-  .one.column.row
-    #users
-      - @users.each do |user|
-        .four.wide.column
-          = render 'shared/userbox', user: user
-          
+  #users
+    = render 'user/userlist'
+
 - if user_signed_in?
   = render 'user/modal_group_memberships'

@@ -1,0 +1,6 @@
+<div class="one column row">
+  <% @users.each_with_index do |user, i| %>
+    <div class="four wide column"><%= render 'shared/userbox', user: user %></div>
+    <% if i % 4 == 0 %></div><div class="one column row"><% end %>
+  <% end %>
+</div>
