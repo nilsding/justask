@@ -73,14 +73,24 @@
       .menu
         %a.item{href: moderation_path}
           View All
+          - if Report.where(deleted: false).count >= 1
+            .ui.horizontal.red.label= Report.where(deleted: false).count
         %a.item{href: moderation_path('answer')}
           Answers
+          - if Report.where(type: "Reports::Answer", deleted: false).count >= 1
+            .ui.horizontal.label= Report.where(type: "Reports::Answer", deleted: false).count
         %a.item{href: moderation_path('comment')}
           Comments
+          - if Report.where(type: "Reports::Comment", deleted: false).count >= 1
+            .ui.horizontal.label= Report.where(type: "Reports::Comment", deleted: false).count
         %a.item{href: moderation_path('user')}
           Users
+          - if Report.where(type: "Reports::User", deleted: false).count >= 1
+            .ui.horizontal.label= Report.where(type: "Reports::User", deleted: false).count
         %a.item{href: moderation_path('question')}
-          Questions      
+          Questions
+          - if Report.where(type: "Reports::Question", deleted: false).count >= 1
+            .ui.horizontal.label= Report.where(type: "Reports::Question", deleted: false).count    
     .item
       .ui.small.inverted.header
         Administration
