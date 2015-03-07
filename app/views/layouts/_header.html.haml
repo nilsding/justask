@@ -37,12 +37,24 @@
             .ui.horizontal.purple.label= notification_count
         %a.item{href: notifications_path('answer')}
           Answers
+          - unless Notification.where(target_type: "Answer", new: true).count.nil?
+            .ui.horizontal.label
+              = Notification.where(target_type: "Answer", new: true).count
         %a.item{href: notifications_path('smile')}
           Smiles
+          - unless Notification.where(target_type: "Smile", new: true).count.nil?
+            .ui.horizontal.label
+              = Notification.where(target_type: "Smile", new: true).count
         %a.item{href: notifications_path('comment')}
           Comments
+          - unless Notification.where(target_type: "Comment", new: true).count.nil?
+            .ui.horizontal.label
+              = Notification.where(target_type: "Comment", new: true).count
         %a.item{href: notifications_path('relationship')}
           New Followers
+          - unless Notification.where(target_type: "Relationship", new: true).count.nil?
+            .ui.horizontal.label
+              = Notification.where(target_type: "Relationship", new: true).count
     .item
       .ui.small.inverted.header
         Settings
