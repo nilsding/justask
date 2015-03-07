@@ -6,11 +6,11 @@
         .content
           .center
             - unless user.bio.blank?
-              %p= markdown user.bio
-            .ui.mini.statistic
+              %p.inverted= markdown user.bio
+            .ui.mini.statistic.inverted
               .value= user.asked_count
               .label Questions
-            .ui.mini.statistic
+            .ui.mini.statistic.inverted
               .value= user.answered_count
               .label Answers
             = render 'user/actions', user: user, type: type
