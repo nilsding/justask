@@ -1,7 +1,6 @@
 = render 'user/profile'
-.ui.page.grid
-  #users
-    = render 'user/userlist'
+#users.ui.page.grid
+  = render 'user/userlist'
 
 - if user_signed_in?
   = render 'user/modal_group_memberships'
