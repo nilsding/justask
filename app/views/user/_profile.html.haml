@@ -18,6 +18,17 @@
             .sub.header= @user.screen_name
         - unless @user.bio.blank?
           %p= markdown @user.bio
+        .ui.horizontal.list
+          - unless @user.website.blank?
+            .item
+              = semantic_icon(:world)
+              %a.content{href: @user.website}= @user.display_website
+          - unless @user.location.blank?
+            .item
+              = semantic_icon('location arrow')
+              .content= @user.location     
+
+          .item
         = render 'user/actions', user: @user, type: :follower    
       .five.wide.column
         .ui.medium.horizontal.statistic
