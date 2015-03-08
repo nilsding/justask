@@ -1,20 +1,20 @@
 - if user_signed_in?
   - type ||= :nil
   - if user == current_user
-    %a.fluid.ui.labeled.button{href: edit_user_profile_path}
+    %a.ui.labeled.button{href: edit_user_profile_path}
       = semantic_icon(:settings) 
       Edit profile
   - else
     - if current_user.following? user
-      %button#editprofile.fluid.ui.red.labeled.button{type: :button, name: 'user-action', data: { action: :unfollow, type: type, target: user.screen_name }}
+      %button#editprofile.ui.red.labeled.button{type: :button, name: 'user-action', data: { action: :unfollow, type: type, target: user.screen_name }}
         = semantic_icon('remove user')
         Unfollow
     - else
-      %button#editprofile.fluid.ui.green.labeled.button{type: :button, name: 'user-action', data: { action: :follow, type: type, target: user.screen_name }}
+      %button#editprofile.ui.green.labeled.button{type: :button, name: 'user-action', data: { action: :follow, type: type, target: user.screen_name }}
         = semantic_icon('add user')
         Follow
   - unless user == current_user
-    #actions.ui.centered.mini.buttons
+    #actions.ui.centered.buttons
       .ui.button
         Actions
       .ui.floating.dropdown.icon.button
