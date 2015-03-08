@@ -2,7 +2,7 @@
   .ui.page.grid
     .three.column.stackable.row
       .three.wide.column
-        .ui.medium.rounded.centered.image
+        .ui.fluid.rounded.centered.image
           - if @user.following? current_user
             .ui.purple.ribbon.label Follows You
           %img{src: @user.profile_picture.url(:large)}
