@@ -15,90 +15,12 @@
       = semantic_icon(:inbox)
       - unless inbox_count.nil?
         .ui.horizontal.purple.label= inbox_count
-      Inbox      
-    .item
-      .ui.small.inverted.header
-        Timelines
-      .menu
-        %a.item{href: root_path}
-          Main Timeline
-        %a.item{href: public_timeline_path}
-          Public Timeline
-        - current_user.groups.each do |group|
-          %a.item{href: group_timeline_path(group.name)}
-            = group.display_name
-    .item
-      .ui.small.inverted.header
-        Notifications
-      .menu
-        %a.item{href: notifications_path}
-          View All
-          - unless notification_count.nil?
-            .ui.horizontal.purple.label= notification_count
-        %a.item{href: notifications_path('answer')}
-          Answers
-          - if Notification.where(target_type: "Answer", new: true).count >= 1
-            .ui.horizontal.label
-              = Notification.where(target_type: "Answer", new: true).count
-        %a.item{href: notifications_path('smile')}
-          Smiles
-          - if Notification.where(target_type: "Smile", new: true).count >= 1
-            .ui.horizontal.label
-              = Notification.where(target_type: "Smile", new: true).count
-        %a.item{href: notifications_path('comment')}
-          Comments
-          - if Notification.where(target_type: "Comment", new: true).count >= 1
-            .ui.horizontal.label
-              = Notification.where(target_type: "Comment", new: true).count
-        %a.item{href: notifications_path('relationship')}
-          New Followers
-          - if Notification.where(target_type: "Relationship", new: true).count >= 1
-            .ui.horizontal.label
-              = Notification.where(target_type: "Relationship", new: true).count
-    .item
-      .ui.small.inverted.header
-        Settings
-      .menu
-        %a.item{href: edit_user_registration_path}
-          Account
-        %a.item{href: edit_user_profile_path}
-          Profile
-        %a.item{href: edit_user_privacy_path}
-          Privacy
-        %a.item{href: services_path}
-          Sharing  
-    .item
-      .ui.small.inverted.header
-        Moderation
-      .menu
-        %a.item{href: moderation_path}
-          View All
-          - if Report.where(deleted: false).count >= 1
-            .ui.horizontal.red.label= Report.where(deleted: false).count
-        %a.item{href: moderation_path('answer')}
-          Answers
-          - if Report.where(type: "Reports::Answer", deleted: false).count >= 1
-            .ui.horizontal.label= Report.where(type: "Reports::Answer", deleted: false).count
-        %a.item{href: moderation_path('comment')}
-          Comments
-          - if Report.where(type: "Reports::Comment", deleted: false).count >= 1
-            .ui.horizontal.label= Report.where(type: "Reports::Comment", deleted: false).count
-        %a.item{href: moderation_path('user')}
-          Users
-          - if Report.where(type: "Reports::User", deleted: false).count >= 1
-            .ui.horizontal.label= Report.where(type: "Reports::User", deleted: false).count
-        %a.item{href: moderation_path('question')}
-          Questions
-          - if Report.where(type: "Reports::Question", deleted: false).count >= 1
-            .ui.horizontal.label= Report.where(type: "Reports::Question", deleted: false).count    
-    .item
-      .ui.small.inverted.header
-        Administration
-      .menu
-        %a.item{href: rails_admin_path}
-          Control Panel
-        %a.item{href: sidekiq_web_path}
-          Sidekiq
+      Inbox
+    = render 'layouts/sidebar_timeline'
+    = render 'layouts/sidebar_notifications'
+    = render 'layouts/sidebar_settings'
+    = render 'layouts/sidebar_moderation'
+    = render 'layouts/sidebar_administration' 
     %a.item{href: destroy_user_session_path, data: { method: :delete}}
       = semantic_icon('sign out')
       Logout

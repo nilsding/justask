@@ -1,0 +1,28 @@
+.item
+  .ui.small.inverted.header
+    Notifications
+  .menu
+    %a.item{href: notifications_path}
+      View All
+      - unless notification_count.nil?
+        .ui.horizontal.purple.label= notification_count
+    %a.item{href: notifications_path('answer')}
+      Answers
+      - if Notification.where(target_type: "Answer", new: true).count >= 1
+        .ui.horizontal.label
+          = Notification.where(target_type: "Answer", new: true).count
+    %a.item{href: notifications_path('smile')}
+      Smiles
+      - if Notification.where(target_type: "Smile", new: true).count >= 1
+        .ui.horizontal.label
+          = Notification.where(target_type: "Smile", new: true).count
+    %a.item{href: notifications_path('comment')}
+      Comments
+      - if Notification.where(target_type: "Comment", new: true).count >= 1
+        .ui.horizontal.label
+          = Notification.where(target_type: "Comment", new: true).count
+    %a.item{href: notifications_path('relationship')}
+      New Followers
+      - if Notification.where(target_type: "Relationship", new: true).count >= 1
+        .ui.horizontal.label
+          = Notification.where(target_type: "Relationship", new: true).count 

@@ -23,10 +23,10 @@ module ApplicationHelper
   
   ##
   # 
-  def bootstrap_color c
+  def semantic_color c
     case c
     when "error", "alert"
-      "danger"
+      "error"
     when "notice"
       "info"
     else
