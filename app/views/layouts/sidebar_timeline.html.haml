@@ -1,0 +1,11 @@
+.item
+  .ui.small.inverted.header
+    Timelines
+  .menu
+    %a.item{href: root_path}
+      Main Timeline
+    %a.item{href: public_timeline_path}
+      Public Timeline
+    - current_user.groups.each do |group|
+      %a.item{href: group_timeline_path(group.name)}
+        = group.display_name 
