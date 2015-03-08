@@ -14,10 +14,29 @@
         = semantic_icon('add user')
         Follow
   - unless user == current_user
-    .btn-group.btn-block
-      %button.btn.btn-default.btn-block.btn-sm.dropdown-toggle{data: { toggle: :dropdown }, aria: { expanded: :false }}
+    .ui.mini.buttons
+      .ui.button
         Actions
-        %span.caret
+      .ui.floating.dropdown.icon.button
+        = semantic_icon(:dropdown)
+        .menu
+          /
+            %a.item{href: '#', name: 'user-action', data: { action: :block, type: type, target: user.screen_name }}
+              Block
+          %a.item{href: '#', data: { target: "#modal-group-memberships", toggle: :modal }}
+            = semantic_icon(:users)
+            Manage group memberships
+          %a.item{href: '#', data: { action: 'report-user', target: user.screen_name }}
+            = semantic_icon('warning sign')
+            Report
+          - if current_user.mod?
+            %a.item{href: '#', data: { target: "#modal-privileges", toggle: :modal }}
+              = semantic_icon(:heartbeat)
+              Check
+              = succeed "'s" do
+                = user.screen_name
+              privileges         
+
       %ul.dropdown-menu
         /
           %li
