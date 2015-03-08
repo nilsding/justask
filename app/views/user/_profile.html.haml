@@ -6,7 +6,7 @@
           - if @user.following? current_user
             .ui.purple.ribbon.label Follows You
           %img{src: @user.profile_picture.url(:large)}
-          - if user == current_user
+          - if @user == current_user
             .ui.ribbon.label It's You
       .eight.wide.column
         - if @user.display_name.blank?
