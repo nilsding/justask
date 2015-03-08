@@ -33,3 +33,8 @@
 .profile {
   position: relative !important;
 }
+
+.ui.image > .ribbon.label {
+  position: absolute;
+  top: 1rem;
+}
