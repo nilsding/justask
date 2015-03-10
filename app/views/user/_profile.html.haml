@@ -16,6 +16,28 @@
           %h2.ui.header
             = @user.display_name
             .sub.header= @user.screen_name
+        .ui.labels
+          - if @user.admin?
+            .ui.horizontal.red.icon.label
+              = semantic_icon(:diamond)
+              Admin
+          - if @user.mod?
+            .ui.horizontal.green.icon.label
+              = semantic_icon(:users)
+              Moderator
+          - if @user.supporter? || @user.moderator == false || @user.admin == false
+            .ui.horizontal.yellow.icon.label
+              = semantic_icon(:star)
+              Supporter
+          - if @user.blogger? || @user.moderator == false || @user.admin == false
+            .ui.horizontal.blue.icon.label
+              = semantic_icon(:pencil)
+              Blogger
+          - if @user.banned?
+            .ui.horizontal.icon.label
+              = semantic_icon(:ban)
+              Banned       
+
         - unless @user.bio.blank?
           %p= markdown @user.bio
         .ui.horizontal.list
