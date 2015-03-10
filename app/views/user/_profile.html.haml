@@ -25,11 +25,11 @@
             .ui.horizontal.green.icon.label
               = semantic_icon(:users)
               Moderator
-          - if @user.supporter? || @user.moderator == false || @user.admin == false
+          - if @user.supporter? and @user.moderator == false and @user.admin == false
             .ui.horizontal.yellow.icon.label
               = semantic_icon(:star)
               Supporter
-          - if @user.blogger? || @user.moderator == false || @user.admin == false
+          - if @user.blogger? and @user.moderator == false and @user.admin == false
             .ui.horizontal.blue.icon.label
               = semantic_icon(:pencil)
               Blogger
