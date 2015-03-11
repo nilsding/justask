@@ -1,12 +1,12 @@
 .item
   .ui.small.inverted.header
-    Settings
+    = t 'views.settings.title'
   .menu
     %a.item{href: edit_user_registration_path}
-      Account
+      = t 'views.settings.account.title'
     %a.item{href: edit_user_profile_path}
-      Profile
+      = t 'views.settings.profile.title'
     %a.item{href: edit_user_privacy_path}
-      Privacy
+      = t 'views.settings.privacy.title'
     %a.item{href: services_path}
-      Sharing   
+      = t 'views.settings.sharing.title' 

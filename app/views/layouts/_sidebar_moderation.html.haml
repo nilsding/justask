@@ -1,24 +1,24 @@
 .item
   .ui.small.inverted.header
-    Moderation
+    = t 'views.moderation.title'
   .menu
     %a.item{href: moderation_path}
-      View All
+      = t 'views.general.all'
       - if Report.where(deleted: false).count >= 1
         .ui.horizontal.red.label= Report.where(deleted: false).count
     %a.item{href: moderation_path('answer')}
-      Answers
+      = t 'views.moderation.answers.title'
       - if Report.where(type: "Reports::Answer", deleted: false).count >= 1
         .ui.horizontal.label= Report.where(type: "Reports::Answer", deleted: false).count
     %a.item{href: moderation_path('comment')}
-      Comments
+      = t 'views.moderation.comments.title'
       - if Report.where(type: "Reports::Comment", deleted: false).count >= 1
         .ui.horizontal.label= Report.where(type: "Reports::Comment", deleted: false).count
     %a.item{href: moderation_path('user')}
-      Users
+      = t 'views.moderation.users.title'
       - if Report.where(type: "Reports::User", deleted: false).count >= 1
         .ui.horizontal.label= Report.where(type: "Reports::User", deleted: false).count
     %a.item{href: moderation_path('question')}
-      Questions
+      = t 'views.moderation.questions.title'
       - if Report.where(type: "Reports::Question", deleted: false).count >= 1
         .ui.horizontal.label= Report.where(type: "Reports::Question", deleted: false).count   
