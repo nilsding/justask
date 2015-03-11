@@ -20,4 +20,35 @@ en:
       signup: 'Sign up'
     inbox:
       title: 'Inbox'
-
+    notifications:
+      title: 'Notifications'
+      answers: 
+        title: 'Answers'
+      smiles: 
+        title: 'Smiles'
+      comments: 
+        title: 'Comments'
+      relationship: 
+        title: 'New Followers'
+    settings:
+      title: 'Settings'
+      account:
+        title: 'Account'
+      profile: 
+        title: 'Profile'
+      privacy:
+        title: 'Privacy'
+      sharing:
+        title: 'Sharing'
+    moderation:
+      title: 'Moderation'
+      answers:
+        title: 'Answers'
+      comments:
+        title: 'Comments'
+      users:
+        title: 'Users'
+      questions:
+        title: 'Questions'    
+    general:
+      all: 'View All'
