@@ -55,13 +55,13 @@
       .five.wide.column
         .ui.medium.horizontal.statistic
           .value= @user.follower_count
-          .label Followers
+          %a.label{href: show_user_followers_path(@user.screen_name)} Followers
         .ui.medium.horizontal.statistic
           .value= @user.friend_count
-          .label Following
+          %a.label{href: show_user_friends_path(@user.screen_name)} Following
         .ui.medium.horizontal.statistic
           .value= @user.asked_count
-          .label Questions asked
+          %a.label{href: show_user_questions_path(@user.screen_name)} Questions asked
         .ui.medium.horizontal.statistic
           .value= @user.answered_count
-          .label Answers given
+          %a.label{href: show_user_profile_path(@user.screen_name)} Answers given
