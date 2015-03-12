@@ -33,14 +33,14 @@
     .comment
       %a.avatar{href: show_user_profile_path(a.user.screen_name)}
         %img{src: gravatar_url(a.user)}
-    .content
-      %a.author= user_screen_name a.user
-      .metadata
-        answered this
-      .text
-        %a{href: show_user_answer_path(a.user.screen_name, a.id)}
-          %span.date= time_ago_in_words(a.created_at)
-        ago
+      .content
+        %a.author= user_screen_name a.user
+        .metadata
+          answered this
+        .text
+          %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+            %span.date= time_ago_in_words(a.created_at)
+          ago
 
 /
   .panel.panel-default.answerbox{data: { id: a.id }}
