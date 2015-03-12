@@ -1,10 +1,11 @@
 - if user_signed_in?
   .ui.page.grid
-    = render 'layouts/messages'
+    .one.column.row
+      = render 'layouts/messages'
 
-    #timeline
-      - @timeline.each do |answer|
-        = render 'shared/answerbox', a: answer
+      #timeline
+        - @timeline.each do |answer|
+          = render 'shared/answerbox', a: answer
 
 - else
   = render 'static/front'
