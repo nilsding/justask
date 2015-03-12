@@ -1,70 +1,113 @@
-.panel.panel-default.answerbox{data: { id: a.id }}
-  - if @question.nil?
-    .panel-heading
-      .media
-        - unless a.question.author_is_anonymous
-          %a.pull-left{href: show_user_profile_path(a.question.user.screen_name)}
-            %img.img-rounded.answerbox--img{src: gravatar_url(a.question.user)}
-        .media-body
-          %h6.text-muted.media-heading.answerbox--question-user
-            = user_screen_name a.question.user, a.question.author_is_anonymous
-            asked
-            - if @user.nil? or a.question.author_is_anonymous
-              %span{title: a.question.created_at, data: { toggle: :tooltip, placement: :bottom }}
-                = time_ago_in_words(a.question.created_at)
-            - else
-              %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
-                %span{title: a.question.created_at, data: { toggle: :tooltip, placement: :bottom }}
-                  = time_ago_in_words(a.question.created_at)
-            ago
-            - unless a.question.author_is_anonymous
+.ui.segment
+  .ui.minimal.comments
+    .comment
+      - unless a.question.author_is_anonymous
+        %a.avatar{href: show_user_profile_path(a.question.user.screen_name)}
+          %img{src: gravatar_url(a.question.user)}
+      .content
+        .author= user_screen_name a.question.user, a.question.author_is_anonymous
+        .metadata
+          asked
+          - if @user.nil? or a.question.author_is_anonymous
+            %span.date= time_ago_in_words(a.question.created_at)
+          - else
+            %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
+              %span.date= time_ago_in_words(a.question.created_at)
+          ago
+          - unless a.question.author_is_anonymous
               - if a.question.answer_count > 1
                 ·
                 %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
                   #{a.question.answer_count} answers
-          .answerbox--question-text
-            = a.question.content
-  .panel-body
-    - if @display_all.nil?
-      .answerbox--answer-text
-        = markdown a.content[0..255]
-        - if a.content.length > 255
-          [...]
-          %p
-            %a.btn.btn-primary{href: show_user_answer_path(a.user.screen_name, a.id)}
-              Read the entire answer
-    - else
-      .answerbox--answer-text
-        = markdown a.content
-    - if @user.nil?
-      .row
-        .col-md-6.col-sm-4.col-xs-6.text-left.text-muted
-          .media
-            .pull-left
-              %a{href: show_user_profile_path(a.user.screen_name)}
-                %img.img-rounded.answerbox--img{src: gravatar_url(a.user)}
-            .media-body
-              %h6.media-heading.answerbox--answer-user
-                %span.hidden-xs
-                  Answered by
-                = user_screen_name a.user
-              .answerbox--answer-date
-                %a{href: show_user_answer_path(a.user.screen_name, a.id)}
-                  %span{title: a.created_at, data: { toggle: :tooltip, placement: :bottom }}
-                    = time_ago_in_words(a.created_at)
-                  ago
-        .col-md-6.col-sm-8.col-xs-6.text-right
-          = render 'shared/answerbox_buttons', a: a
-    - else
-      .row
-        .col-md-6.col-sm-4.col-xs-6.text-left.text-muted
-          %i.fa.fa-clock-o
-          %a{href: show_user_answer_path(a.user.screen_name, a.id)}
-            %span{title: a.created_at, data: { toggle: :tooltip, placement: :bottom }}
-              = time_ago_in_words(a.created_at)
-            ago
-        .col-md-6.col-sm-8.col-xs-6.text-right
-          = render 'shared/answerbox_buttons', a: a
-  .panel-footer{id: "ab-comments-section-#{a.id}", style: @display_all.nil? ? 'display: none' : nil }
-    %div{id: "ab-smiles-#{a.id}"}= render 'shared/smiles', a: a
-    %div{id: "ab-comments-#{a.id}"}= render 'shared/comments', a: a
+        .text= a.question.content
+  - if @display_all.nil?
+    %p= markdown a.content[0..255]
+    - if a.content.length > 255
+      [...]
+      %p
+        %a.ui.blue.button{href: show_user_answer_path(a.user.screen_name, a.id)}
+          Read the entire answer
+  .ui.minimal.comments
+    .comment
+      %a.avatar{href: show_user_profile_path(a.user.screen_name)}
+        %img{src: gravatar_url(a.user)}
+    .content
+      .author= user_screen_name a.user
+      .metadata
+        answered this
+      .text
+        %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+          %span.date= time_ago_in_words(a.created_at)
+
+
+/
+  .panel.panel-default.answerbox{data: { id: a.id }}
+    - if @question.nil?
+      .panel-heading
+        .media
+          - unless a.question.author_is_anonymous
+            %a.pull-left{href: show_user_profile_path(a.question.user.screen_name)}
+              %img.img-rounded.answerbox--img{src: gravatar_url(a.question.user)}
+          .media-body
+            %h6.text-muted.media-heading.answerbox--question-user
+              = user_screen_name a.question.user, a.question.author_is_anonymous
+              asked
+              - if @user.nil? or a.question.author_is_anonymous
+                %span{title: a.question.created_at, data: { toggle: :tooltip, placement: :bottom }}
+                  = time_ago_in_words(a.question.created_at)
+              - else
+                %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
+                  %span{title: a.question.created_at, data: { toggle: :tooltip, placement: :bottom }}
+                    = time_ago_in_words(a.question.created_at)
+              ago
+              - unless a.question.author_is_anonymous
+                - if a.question.answer_count > 1
+                  ·
+                  %a{href: show_user_question_path(a.question.user.screen_name, a.question.id)}
+                    #{a.question.answer_count} answers
+            .answerbox--question-text
+              = a.question.content
+    .panel-body
+      - if @display_all.nil?
+        .answerbox--answer-text
+          = markdown a.content[0..255]
+          - if a.content.length > 255
+            [...]
+            %p
+              %a.btn.btn-primary{href: show_user_answer_path(a.user.screen_name, a.id)}
+                Read the entire answer
+      - else
+        .answerbox--answer-text
+          = markdown a.content
+      - if @user.nil?
+        .row
+          .col-md-6.col-sm-4.col-xs-6.text-left.text-muted
+            .media
+              .pull-left
+                %a{href: show_user_profile_path(a.user.screen_name)}
+                  %img.img-rounded.answerbox--img{src: gravatar_url(a.user)}
+              .media-body
+                %h6.media-heading.answerbox--answer-user
+                  %span.hidden-xs
+                    Answered by
+                  = user_screen_name a.user
+                .answerbox--answer-date
+                  %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+                    %span{title: a.created_at, data: { toggle: :tooltip, placement: :bottom }}
+                      = time_ago_in_words(a.created_at)
+                    ago
+          .col-md-6.col-sm-8.col-xs-6.text-right
+            = render 'shared/answerbox_buttons', a: a
+      - else
+        .row
+          .col-md-6.col-sm-4.col-xs-6.text-left.text-muted
+            %i.fa.fa-clock-o
+            %a{href: show_user_answer_path(a.user.screen_name, a.id)}
+              %span{title: a.created_at, data: { toggle: :tooltip, placement: :bottom }}
+                = time_ago_in_words(a.created_at)
+              ago
+          .col-md-6.col-sm-8.col-xs-6.text-right
+            = render 'shared/answerbox_buttons', a: a
+    .panel-footer{id: "ab-comments-section-#{a.id}", style: @display_all.nil? ? 'display: none' : nil }
+      %div{id: "ab-smiles-#{a.id}"}= render 'shared/smiles', a: a
+      %div{id: "ab-comments-#{a.id}"}= render 'shared/comments', a: a
