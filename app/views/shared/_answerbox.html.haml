@@ -27,6 +27,8 @@
       %p
         %a.ui.blue.button{href: show_user_answer_path(a.user.screen_name, a.id)}
           Read the entire answer
+  - else
+    %p= = markdown a.content
   .ui.minimal.comments
     .comment
       %a.avatar{href: show_user_profile_path(a.user.screen_name)}
