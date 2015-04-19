@@ -1,4 +1,6 @@
 class Ajax::QuestionController < ApplicationController
+  include MarkdownHelper
+
   def create
     params.require :question
     params.require :anonymousQuestion
@@ -44,6 +46,22 @@ class Ajax::QuestionController < ApplicationController
 
     @status = :okay
     @message = "Question asked successfully."
+    @success = true
+  end
+
+  def preview
+    params.require :md
+
+    @message = "Failed to render markdown."
+    begin
+      @markdown = markdown(params[:md], Time.new)
+      @message = "Successfully rendered markdown."
+    rescue
+      @status = :fail
+      @success = false
+      return
+    end
+    @status = :okay
     @success = true
   end
 end

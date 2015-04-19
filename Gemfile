@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.1.8'
+gem 'rails', '4.2.1'
 
 gem 'pg', group: :postgres
 gem 'mysql2', group: :mysql
@@ -29,7 +29,7 @@ gem 'devise-async'
 gem 'bootstrap_form'
 gem 'font-kit-rails'
 gem 'nprogress-rails'
-gem 'font-awesome-rails', '~> 4.2.0.0'
+gem 'font-awesome-rails', '~> 4.3.0.0'
 gem 'rails-assets-growl'
 gem "paperclip", "~> 4.2"
 gem 'delayed_paperclip'
