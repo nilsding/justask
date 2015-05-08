@@ -94,11 +94,67 @@ namespace :justask do
   end
 
   desc "Hits an user with the banhammer."
-  task :ban, [:screen_name] => :environment do |t, args|
+  task :permanently_ban, [:screen_name, :reason] => :environment do |t, args|
     fail "screen name required" if args[:screen_name].nil?
     user = User.find_by_screen_name(args[:screen_name])
     fail "user #{args[:screen_name]} not found" if user.nil?
-    user.banned = true
+    user.permanently_banned = true
+    user.ban_reason = args[:reason]
+    user.save!
+    puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
+  end
+
+  desc "Hits an user with the banhammer for one day."
+  task :ban, [:screen_name, :reason] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    user.permanently_banned = false
+    user.banned_until = DateTime.current + 1
+    user.ban_reason = args[:reason]
+    user.save!
+    puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
+  end
+
+  desc "Hits an user with the banhammer for one week."
+  task :week_ban, [:screen_name, :reason] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    user.permanently_banned = false
+    user.banned_until = DateTime.current + 7
+    user.ban_reason = args[:reason]
+    user.save!
+    puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
+  end
+
+  desc "Hits an user with the banhammer for one month."
+  task :month_ban, [:screen_name, :reason] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    user.permanently_banned = false
+    user.banned_until = DateTime.current + 30
+    user.ban_reason = args[:reason]
+    user.save!
+    puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
+  end
+
+  desc "Hits an user with the banhammer for one year."
+  task :year_ban, [:screen_name, :reason] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    user.permanently_banned = false
+    user.banned_until = DateTime.current + 365
+    user.ban_reason = args[:reason]
+    user.save!
+    puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
+  end
+
+  desc "Hits an user with the banhammer for one aeon."
+  task :aeon_ban, [:screen_name, :reason] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    user.permanently_banned = false
+    user.banned_until = DateTime.current + 365_000_000_000
+    user.ban_reason = args[:reason]
     user.save!
     puts "#{user.screen_name} got hit by\033[5m YE OLDE BANHAMMER\033[0m!!1!"
   end
@@ -108,7 +164,9 @@ namespace :justask do
     fail "screen name required" if args[:screen_name].nil?
     user = User.find_by_screen_name(args[:screen_name])
     fail "user #{args[:screen_name]} not found" if user.nil?
-    user.banned = false
+    user.permanently_banned = false
+    user.banned_until = nil
+    user.ban_reason = nil
     user.save!
     puts "#{user.screen_name} is no longer banned."
   end
@@ -153,6 +211,26 @@ namespace :justask do
     puts "#{user.screen_name} is no longer an supporter."
   end
 
+  desc "Gives contributor status to an user."
+  task :contrib, [:screen_name] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    fail "user #{args[:screen_name]} not found" if user.nil?
+    user.contributor = true
+    user.save!
+    puts "#{user.screen_name} is now a contributor."
+  end
+
+  desc "Removes contributor status from an user."
+  task :decontrib, [:screen_name] => :environment do |t, args|
+    fail "screen name required" if args[:screen_name].nil?
+    user = User.find_by_screen_name(args[:screen_name])
+    fail "user #{args[:screen_name]} not found" if user.nil?
+    user.contributor = false
+    user.save!
+    puts "#{user.screen_name} is no longer a contributor."
+  end
+
   desc "Lists all users."
   task lusers: :environment do
     User.all.each do |u|
@@ -178,6 +256,67 @@ namespace :justask do
     puts "Purged #{destroyed_count} dead notifications."
   end
 
+  desc "Subscribes everyone to their answers"
+  task fix_submarines: :environment do
+    format = '%t (%c/%C) [%b>%i] %e'
+
+    total = Answer.count
+    progress = ProgressBar.create title: 'Processing answers', format: format, starting_at: 0, total: total
+    subscribed = 0
+
+    Answer.all.each do |a|
+      if not a.user.nil?
+        Subscription.subscribe a.user, a
+        subscribed += 1
+      end
+
+      progress.increment
+    end
+
+    puts "Subscribed to #{subscribed} posts."
+  end
+
+  desc "Destroy lost subscriptions"
+  task fix_torpedoes: :environment do
+    format = '%t (%c/%C) [%b>%i] %e'
+
+    total = Subscription.count
+    progress = ProgressBar.create title: 'Processing subscriptions', format: format, starting_at: 0, total: total
+    destroyed = 0
+    Subscription.all.each do |s|
+      if s.user.nil? or s.answer.nil?
+        s.destroy
+        destroyed += 1
+      end
+
+      progress.increment
+    end
+
+    puts "Put #{destroyed} subscriptions up for adoption."
+  end
+
+  desc "Fixes reports"
+  task fix_reports: :environment do
+    format = '%t (%c/%C) [%b>%i] %e'
+
+    total = Report.count
+    progress = ProgressBar.create title: 'Processing reports', format: format, starting_at: 0, total: total
+    destroyed = 0
+    Report.all.each do |r|
+      if r.target.nil? and not r.deleted?
+        r.deleted = true
+        r.save
+        destroyed += 1
+      elsif r.user.nil?
+        r.destroy
+        destroyed += 1
+      end
+      progress.increment
+    end
+
+    puts "Marked #{destroyed} reports as deleted."
+  end
+
   desc "Fixes everything else"
   task fix_db: :environment do
     format = '%t (%c/%C) [%b>%i] %e'
@@ -186,7 +325,9 @@ namespace :justask do
         question: 0,
         answer: 0,
         smile: 0,
-        comment: 0
+        comment: 0,
+        subscription: 0,
+        report: 0
     }
 
     total = Inbox.count
@@ -230,10 +371,38 @@ namespace :justask do
       progress.increment
     end
 
+    total = Subscription.count
+    progress = ProgressBar.create title: 'Processing subscriptions', format: format, starting_at: 0, total: total
+    Subscription.all.each do |s|
+      if s.user.nil? or s.answer.nil?
+        s.destroy
+        destroyed_count[:subscription] += 1
+      end
+
+      progress.increment
+    end
+
+    total = Report.count
+    progress = ProgressBar.create title: 'Processing reports', format: format, starting_at: 0, total: total
+    Report.all.each do |r|
+      if r.target.nil? and not r.deleted?
+        r.deleted = true
+        r.save
+        destroyed_count[:report] += 1
+      elsif r.user.nil?
+        r.destroy
+        destroyed_count[:report] += 1
+      end
+      progress.increment
+    end
+
+    puts "Put #{destroyed_count[:subscription]} subscriptions up for adoption."
     puts "Purged #{destroyed_count[:inbox]} dead inbox entries."
     puts "Marked #{destroyed_count[:question]} questions as anonymous."
     puts "Purged #{destroyed_count[:answer]} dead answers."
-    puts "Purged #{destroyed_count[:answer]} dead comments."
+    puts "Purged #{destroyed_count[:comment]} dead comments."
+    puts "Purged #{destroyed_count[:subscription]} dead subscriptions."
+    puts "Marked #{destroyed_count[:report]} reports as deleted."
   end
 
   desc "Prints lonely people."

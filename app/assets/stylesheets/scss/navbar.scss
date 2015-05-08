@@ -1,11 +1,13 @@
 .navbar .nav .badge {
   padding: 3px 6px 3px;
   background-color: $navbar-inverse-link-active-bg;
+  color: #fff;
 }
 
 .navbar .nav .active .badge, li.dropdown.open a.dropdown-toggle span.badge {
   padding: 3px 6px 3px;
   background-color: $navbar-inverse-bg;
+  color: #fff;
 }
 
 .navbar--inbox-animation {
@@ -117,6 +119,68 @@
 }
 
 .profile--image-dropdown > a {
-  padding-top: 16px !important;
-  padding-bottom: 16px !important;
+  padding: 0px !important;
+}
+
+.profile--image-avatar {
+  min-height: 50px;
+  min-width: 50px;
+  height: 50px;
+  width: 50px;
+}
+
+.navbar-inverse {
+  border: none;
+}
+
+@media (min-width: 768px) {
+  nav.navbar .nav > li:not(.profile--image-dropdown) {
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $navbar-inverse-link-color;
+        height: 0px;
+        -webkit-transition-property: height;
+        transition-property: height;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+    }
+
+    &:hover, &:focus, &:active {
+      &:before {
+        height: 4px
+      }
+    }
+
+    &.active:before {
+      height: 4px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  nav.navbar .nav {
+    margin-bottom: 0;
+    margin-top: 0;
+
+    & > li {
+      &.active a {
+        background-color: $navbar-inverse-link-active-bg-mobile !important;
+      }
+
+      &.dropdown.profile--image-dropdown a .visible-xs {
+        padding-left: 15px;
+        line-height: 40px;
+        margin: 0;
+      }
+    }
+  }
 }

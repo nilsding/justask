@@ -21,6 +21,7 @@
 #= require question
 #= require settings
 #= require user
+#= require report
 # not required:
 # _tree ./moderation
 
@@ -40,7 +41,8 @@ $(document).on "click", "button#create-account", ->
   Turbolinks.visit "/sign_up"
 
 _ready = ->
-  sweetAlertInitialize()
+  if typeof sweetAlertInitialize != "undefined"
+    sweetAlertInitialize()
 
 $(document).ready _ready
 $(document).on 'page:load', _ready

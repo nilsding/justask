@@ -1,4 +1,11 @@
 class Ajax::ReportController < ApplicationController
+  rescue_from(ActionController::ParameterMissing) do |param_miss_ex|
+    @status = :parameter_error
+    @message = "#{param_miss_ex.param.capitalize} is required"
+    @success = false
+    render partial: "ajax/shared/status"
+  end
+  
   def create
     params.require :id
     params.require :type
@@ -22,13 +29,12 @@ class Ajax::ReportController < ApplicationController
                params[:type].strip.capitalize.constantize.find params[:id]
              end
 
-
     if object.nil?
       @message = "Could not find #{params[:type]}"
       return
     end
 
-    current_user.report object
+    current_user.report object, params[:reason]
 
     @status = :okay
     @message = "#{params[:type].capitalize} reported.  A moderator will decide what happens with the #{params[:type]}."

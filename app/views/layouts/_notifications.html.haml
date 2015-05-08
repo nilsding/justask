@@ -50,6 +50,18 @@
                       your answer
                     = time_ago_in_words notification.target.created_at
                     ago
+              - when "CommentSmile"
+                .pull-left
+                  %img.img-rounded.notification--dropdown-img{src: gravatar_url(notification.target.user)}
+                .media-body
+                  %h6.media-heading.notification--dropdown-user
+                    = user_screen_name notification.target.user
+                  .notification--dropdown-text
+                    smiled at
+                    %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.comment.answer.id), title: "#{notification.target.comment.content[0..40]}...", data: { toggle: :tooltip, placement: :top }}
+                      your comment
+                    = time_ago_in_words notification.target.created_at
+                    ago
               - when "Comment"
                 .pull-left
                   %img.img-rounded.notification--dropdown-img{src: gravatar_url(notification.target.user)}
@@ -59,7 +71,13 @@
                   .notification--dropdown-text
                     commented on
                     %a{href: show_user_answer_path(username: notification.target.user.screen_name, id: notification.target.answer.id), title: "#{notification.target.answer.content[0..40]}...", data: { toggle: :tooltip, placement: :top }}
-                      your answer
+                      - if notification.target.answer.user == current_user
+                        your
+                      - elsif notification.target.user == notification.target.answer.user
+                        their
+                      - else
+                        = user_screen_name(notification.target.answer.user, false, false) + "'s"
+                      answer
                     = time_ago_in_words notification.target.created_at
                     ago
     %li= link_to "Show all notifications#{" and mark them as read" if notifications.pluck(:new).any?}", notifications_path
